@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: charly
- * Date: 22/06/2016
- * Time: 21:29
+ * Date: 23/06/2016
+ * Time: 10:11
  */
 
 namespace AppBundle\Controller;
@@ -12,17 +12,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class IndexController extends Controller
+class InscriptionController extends Controller
 {
 
     /**
-     * @Route("/index", name="index")
+     * @Route("/inscription", name="inscription")
      */
-    public function getIndex()
+    public function getInscription()
     {
         return $this->render(
-            'index.html.twig'
+            'inscription.html.twig'
         );
     }
-
 }

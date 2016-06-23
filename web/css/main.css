@@ -1,4 +1,16 @@
+/* index.html.twig */
+
 .box-presentation {
     margin: auto;
     text-align: center;
+    background-color: #990000;
+    color: white;
+    padding-bottom: 20px;
+    border: 1px solid white;
+}
+
+.go-to-inscription {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 4em;
 }
