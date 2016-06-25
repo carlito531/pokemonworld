@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <header class="row">
+            <div class="col-md-4">
+                <img src="{{ asset('images/pokeball_flat.png') }}" width="150px" height="150px" />
+            </div>
+            <div class="col-md-8" style="color: white">
+                <h1> Pokémon World </h1>
+            </div>
+            <div class="col-md-8" style="color: white">
+                <h3> Inscription/Connexion </h3>
+            </div>
+        </header>
+        </br></br>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-4">
+                <div class="row">
+                    <div class="row">
+                        <h4 style="text-align: justify"> Veuillez entrer votre identifiant et votre mot de passe
+                            </br>
+                            afin de vous connecter à l'application.
+                            </br>
+                            Si vous ne possédez pas encore de compte,
+                            </br>
+                            cliquer sur le bouton <b>inscription.</b>
+                        </h4>
+                    </div>
+                    </br></br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="loginText">Identifiant : </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="loginText" type="text" name="loginText"> <br>
+                        </div>
+                    </div>
+                    </br></br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="passwordText">Mot de passe : </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="passwordText" type="password" name="passwordText"><br>
+                        </div>
+                    </div>
+                    </br></br>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input id="connection" type="submit" name="connectionBtn" value="Connexion" />
+                        </div>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input id="inscription" type="submit" name="inscriptionBtn" value="Inscription" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="{{ asset('js/inscriptionController.js') }}"> </script>
+    </div>
+
+{% endblock %}

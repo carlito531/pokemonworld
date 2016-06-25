@@ -14,3 +14,18 @@
     font-weight: bold;
     font-size: 4em;
 }
+
+/* inscription.html.twig */
+
+header {
+    background-color: #990000;
+}
+
+input[type=text], input[type=password] {
+    width:100%;
+}
+
+input[type=submit] {
+    width:100%;
+    cursor:pointer;
+}

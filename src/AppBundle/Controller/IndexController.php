@@ -24,5 +24,4 @@ class IndexController extends Controller
             'index.html.twig'
         );
     }
-
 }
