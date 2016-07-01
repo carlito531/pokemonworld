@@ -19,7 +19,7 @@ class Trainer
 {
 
     /**
-     * @ORM\Column(type="integer", name="id_trainer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -46,15 +46,41 @@ class Trainer
     private $isMaster;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Npc")
-     * @ORM\JoinColumn(name="id_npc")
+     * @ORM\OneToOne(targetEntity="Npc")
+     * @ORM\JoinColumn(name="npc_id")
      */
     private $npc;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Image")
      */
     private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Badge")
+     */
+    private $badges;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Object", inversedBy="trainers")
+     * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
+     */
+    private $object;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Fight", mappedBy="trainer1")
+     */
+    private $player;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Fight", mappedBy="trainer2")
+     */
+    private $opponent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Pokemon", mappedBy="trainer")
+     */
+    private $pokemons;
 
 
     /**
@@ -209,5 +235,175 @@ class Trainer
     public function getImage()
     {
         return $this->image;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->badges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->player = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->opponent = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pokemons = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add badge
+     *
+     * @param \AppBundle\Entity\Badge $badge
+     *
+     * @return Trainer
+     */
+    public function addBadge(\AppBundle\Entity\Badge $badge)
+    {
+        $this->badges[] = $badge;
+
+        return $this;
+    }
+
+    /**
+     * Remove badge
+     *
+     * @param \AppBundle\Entity\Badge $badge
+     */
+    public function removeBadge(\AppBundle\Entity\Badge $badge)
+    {
+        $this->badges->removeElement($badge);
+    }
+
+    /**
+     * Get badges
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBadges()
+    {
+        return $this->badges;
+    }
+
+    /**
+     * Set object
+     *
+     * @param \AppBundle\Entity\Object $object
+     *
+     * @return Trainer
+     */
+    public function setObject(\AppBundle\Entity\Object $object = null)
+    {
+        $this->object = $object;
+
+        return $this;
+    }
+
+    /**
+     * Get object
+     *
+     * @return \AppBundle\Entity\Object
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
+     * Add player
+     *
+     * @param \AppBundle\Entity\Fight $player
+     *
+     * @return Trainer
+     */
+    public function addPlayer(\AppBundle\Entity\Fight $player)
+    {
+        $this->player[] = $player;
+
+        return $this;
+    }
+
+    /**
+     * Remove player
+     *
+     * @param \AppBundle\Entity\Fight $player
+     */
+    public function removePlayer(\AppBundle\Entity\Fight $player)
+    {
+        $this->player->removeElement($player);
+    }
+
+    /**
+     * Get player
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayer()
+    {
+        return $this->player;
+    }
+
+    /**
+     * Add opponent
+     *
+     * @param \AppBundle\Entity\Fight $opponent
+     *
+     * @return Trainer
+     */
+    public function addOpponent(\AppBundle\Entity\Fight $opponent)
+    {
+        $this->opponent[] = $opponent;
+
+        return $this;
+    }
+
+    /**
+     * Remove opponent
+     *
+     * @param \AppBundle\Entity\Fight $opponent
+     */
+    public function removeOpponent(\AppBundle\Entity\Fight $opponent)
+    {
+        $this->opponent->removeElement($opponent);
+    }
+
+    /**
+     * Get opponent
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOpponent()
+    {
+        return $this->opponent;
+    }
+
+    /**
+     * Add pokemon
+     *
+     * @param \AppBundle\Entity\Pokemon $pokemon
+     *
+     * @return Trainer
+     */
+    public function addPokemon(\AppBundle\Entity\Pokemon $pokemon)
+    {
+        $this->pokemons[] = $pokemon;
+
+        return $this;
+    }
+
+    /**
+     * Remove pokemon
+     *
+     * @param \AppBundle\Entity\Pokemon $pokemon
+     */
+    public function removePokemon(\AppBundle\Entity\Pokemon $pokemon)
+    {
+        $this->pokemons->removeElement($pokemon);
+    }
+
+    /**
+     * Get pokemons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPokemons()
+    {
+        return $this->pokemons;
     }
 }

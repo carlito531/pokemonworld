@@ -18,7 +18,7 @@ class Image
 {
 
     /**
-     * @ORM\Column(type="integer", name="id_image")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */

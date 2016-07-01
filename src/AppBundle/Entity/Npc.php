@@ -19,11 +19,16 @@ class Npc
 {
 
     /**
-     * @ORM\Column(type="integer", name="id_npc")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=50, name="name")
+     */
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="NpcType", inversedBy="npcs")
@@ -108,5 +113,29 @@ class Npc
     public function getTrainer()
     {
         return $this->trainer;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Npc
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -12,13 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="npctype")
+ * @ORM\Table(name="npcType")
  */
 class NpcType
 {
 
     /**
-     * @ORM\Column(type="integer", name="id_npctype")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
