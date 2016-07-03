@@ -25,9 +25,9 @@ class ObjectType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
      */
-    private $name;
+    private $type;
 
     /**
      * @ORM\OneToMany(targetEntity="Object", mappedBy="objectType")
@@ -53,27 +53,27 @@ class ObjectType
     }
 
     /**
-     * Set name
+     * Set type
      *
-     * @param string $name
+     * @param string $type
      *
      * @return ObjectType
      */
-    public function setName($name)
+    public function setType($type)
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get type
      *
      * @return string
      */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
+        return $this->type;
     }
 
     /**

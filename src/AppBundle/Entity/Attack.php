@@ -24,23 +24,23 @@ class Attack
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer", name="damage")
+     * @ORM\Column(type="integer", name="damage", nullable=false)
      */
     private $damage;
 
     /**
-     * @ORM\Column(type="float", length=50, name="accuracy")
+     * @ORM\Column(type="float", length=50, name="accuracy", nullable=false)
      */
     private $accuracy;
 
     /**
      * @ORM\ManyToOne(targetEntity="AttackType", inversedBy="attacks")
-     * @ORM\JoinColumn(name="attackType_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attackType_id", referencedColumnName="id", nullable=false)
      */
     private $attackType;
 

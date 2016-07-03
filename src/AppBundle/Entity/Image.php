@@ -25,7 +25,7 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2083, name="url")
+     * @ORM\Column(type="string", length=2083, name="url", nullable=false)
      * 2083 see http://stackoverflow.com/questions/219569/best-database-field-type-for-a-url
      */
     private $url;

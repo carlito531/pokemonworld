@@ -25,12 +25,12 @@ class NpcType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="type")
+     * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
      */
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Npc", mappedBy="npctype")
+     * @ORM\OneToMany(targetEntity="Npc", mappedBy="npcType")
      */
     private $npcs;
 

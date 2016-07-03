@@ -24,22 +24,22 @@ class Pokemon
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer", name="level")
+     * @ORM\Column(type="integer", name="level", nullable=false)
      */
     private $level;
 
     /**
-     * @ORM\Column(type="integer", name="experience")
+     * @ORM\Column(type="integer", name="experience", nullable=false)
      */
     private $experience;
 
     /**
-     * @ORM\Column(type="integer", name="hp")
+     * @ORM\Column(type="integer", name="hp", nullable=false)
      */
     private $hp;
 
@@ -63,39 +63,45 @@ class Pokemon
 
     /**
      * @ORM\ManyToOne(targetEntity="PokemonType", inversedBy="pokemons")
-     * @ORM\JoinColumn(name="pokemonType_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="pokemonType_id", referencedColumnName="id", nullable=false)
      */
     private $pokemonType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks1")
-     * @ORM\JoinColumn(name="attack_id1", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attack_id1", referencedColumnName="id", nullable=false)
      */
     private $attack1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks2")
-     * @ORM\JoinColumn(name="attack_id2", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attack_id2", referencedColumnName="id", nullable=false)
      */
     private $attack2;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks3")
-     * @ORM\JoinColumn(name="attack_id3", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attack_id3", referencedColumnName="id", nullable=false)
      */
     private $attack3;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks4")
-     * @ORM\JoinColumn(name="attack_id4", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attack_id4", referencedColumnName="id", nullable=false)
      */
     private $attack4;
 
     /**
      * @ORM\ManyToOne(targetEntity="Pokedex", inversedBy="pokedexs")
-     * @ORM\JoinColumn(name="pokedex_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="pokedex_id", referencedColumnName="id", nullable=false)
      */
     private $pokedex;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Position", inversedBy="pokemons")
+     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     */
+    private $position;
 
     /**
      * Get id
@@ -417,5 +423,29 @@ class Pokemon
     public function getPokedex()
     {
         return $this->pokedex;
+    }
+
+    /**
+     * Set position
+     *
+     * @param \AppBundle\Entity\Position $position
+     *
+     * @return Pokemon
+     */
+    public function setPosition(\AppBundle\Entity\Position $position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return \AppBundle\Entity\Position
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

@@ -24,7 +24,7 @@ class AttackType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
      */
     private $type;
 

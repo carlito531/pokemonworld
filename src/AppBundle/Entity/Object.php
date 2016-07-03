@@ -24,12 +24,12 @@ class Object
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer", name="quantity")
+     * @ORM\Column(type="integer", name="quantity", nullable=false)
      */
     private $quantity;
 
@@ -40,23 +40,16 @@ class Object
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Trainer", mappedBy="object")
+     * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="object")
+     * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
      */
     private $trainers;
 
     /**
      * @ORM\ManyToOne(targetEntity="ObjectType", inversedBy="objects")
-     * @ORM\JoinColumn(name="objectType_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="objectType_id", referencedColumnName="id", nullable=false)
      */
     private $objectType;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->trainers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -141,33 +134,23 @@ class Object
     }
 
     /**
-     * Add trainer
+     * Set trainers
      *
-     * @param \AppBundle\Entity\Trainer $trainer
+     * @param \AppBundle\Entity\Trainer $trainers
      *
      * @return Object
      */
-    public function addTrainer(\AppBundle\Entity\Trainer $trainer)
+    public function setTrainers(\AppBundle\Entity\Trainer $trainers = null)
     {
-        $this->trainers[] = $trainer;
+        $this->trainers = $trainers;
 
         return $this;
     }
 
     /**
-     * Remove trainer
-     *
-     * @param \AppBundle\Entity\Trainer $trainer
-     */
-    public function removeTrainer(\AppBundle\Entity\Trainer $trainer)
-    {
-        $this->trainers->removeElement($trainer);
-    }
-
-    /**
      * Get trainers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Trainer
      */
     public function getTrainers()
     {
@@ -181,7 +164,7 @@ class Object
      *
      * @return Object
      */
-    public function setObjectType(\AppBundle\Entity\ObjectType $objectType = null)
+    public function setObjectType(\AppBundle\Entity\ObjectType $objectType)
     {
         $this->objectType = $objectType;
 

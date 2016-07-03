@@ -25,7 +25,7 @@ class Badge
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2083, name="url")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
 

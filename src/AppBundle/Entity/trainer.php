@@ -26,17 +26,17 @@ class Trainer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50, name="login")
+     * @ORM\Column(type="string", length=50, name="login", nullable=false, unique=true)
      */
     private $login;
 
     /**
-     * @ORM\Column(type="string", length=20, name="password")
+     * @ORM\Column(type="string", length=64, name="password", nullable=false)
      */
     private $password;
 
@@ -62,8 +62,7 @@ class Trainer
     private $badges;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Object", inversedBy="trainers")
-     * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Object", mappedBy="trainers")
      */
     private $object;
 
@@ -82,6 +81,24 @@ class Trainer
      */
     private $pokemons;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Position", inversedBy="trainers")
+     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     */
+    private $position;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->badges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->object = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->player = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->opponent = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pokemons = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -236,16 +253,6 @@ class Trainer
     {
         return $this->image;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->badges = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->player = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->opponent = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pokemons = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add badge
@@ -282,23 +289,33 @@ class Trainer
     }
 
     /**
-     * Set object
+     * Add object
      *
      * @param \AppBundle\Entity\Object $object
      *
      * @return Trainer
      */
-    public function setObject(\AppBundle\Entity\Object $object = null)
+    public function addObject(\AppBundle\Entity\Object $object)
     {
-        $this->object = $object;
+        $this->object[] = $object;
 
         return $this;
     }
 
     /**
+     * Remove object
+     *
+     * @param \AppBundle\Entity\Object $object
+     */
+    public function removeObject(\AppBundle\Entity\Object $object)
+    {
+        $this->object->removeElement($object);
+    }
+
+    /**
      * Get object
      *
-     * @return \AppBundle\Entity\Object
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getObject()
     {
@@ -405,5 +422,29 @@ class Trainer
     public function getPokemons()
     {
         return $this->pokemons;
+    }
+
+    /**
+     * Set position
+     *
+     * @param \AppBundle\Entity\Position $position
+     *
+     * @return Trainer
+     */
+    public function setPosition(\AppBundle\Entity\Position $position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return \AppBundle\Entity\Position
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

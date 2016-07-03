@@ -17,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Npc
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -26,15 +25,15 @@ class Npc
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name")
+     * @ORM\Column(type="string", length=50, name="name", nullable=false)
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="NpcType", inversedBy="npcs")
-     * @ORM\JoinColumn(name="npctype_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="npctype_id", referencedColumnName="id", nullable=false)
      */
-    private $npctype;
+    private $npcType;
 
     /**
      * @ORM\OneToOne(targetEntity="Trainer")
@@ -42,6 +41,11 @@ class Npc
      */
     private $trainer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Position", inversedBy="npcs")
+     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     */
+    private $position;
 
     /**
      * Set npcType
@@ -137,5 +141,29 @@ class Npc
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set position
+     *
+     * @param \AppBundle\Entity\Position $position
+     *
+     * @return Npc
+     */
+    public function setPosition(\AppBundle\Entity\Position $position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return \AppBundle\Entity\Position
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

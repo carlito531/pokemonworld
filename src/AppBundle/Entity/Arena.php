@@ -24,7 +24,7 @@ class Arena
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50 , name="name")
+     * @ORM\Column(type="string", length=50 , name="name", nullable=false)
      */
     private $name;
 
@@ -34,8 +34,8 @@ class Arena
     private $fights;
 
     /**
-     * @ORM\OneToOne(targetEntity="Position")
-     * @ORM\JoinColumn(name="position_id")
+     * @ORM\OneToOne(targetEntity="Position" , cascade={"remove"})
+     * @ORM\JoinColumn(name="position_id", nullable=false)
      */
     private $position;
 

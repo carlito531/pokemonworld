@@ -24,19 +24,19 @@ class Fight
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", name="date")
+     * @ORM\Column(type="string", name="date", nullable=false)
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="player")
-     * @ORM\JoinColumn(name="trainer_id1", referencedColumnName="id")
+     * @ORM\JoinColumn(name="trainer_id1", referencedColumnName="id", nullable=false)
      */
     private $trainer1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="opponent")
-     * @ORM\JoinColumn(name="trainer_id2", referencedColumnName="id")
+     * @ORM\JoinColumn(name="trainer_id2", referencedColumnName="id", nullable=false)
      */
     private $trainer2;
 
