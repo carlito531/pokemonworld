@@ -2,7 +2,6 @@
 
 namespace AppBundle\RESTController;
 
-use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\AttackType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,8 +33,6 @@ class AttackTypeController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         $attacktypes = $em->getRepository('AppBundle:AttackType')->findAll();
-
-        //var_dump($attacktypes);
 
         $view = $this->view($attacktypes, 200)->setFormat('json');
 
