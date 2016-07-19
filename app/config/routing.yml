@@ -1,3 +1,17 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+attacktypes:
+    type: annotation
+    resource: 'AppBundle\RESTController\AttackTypeController'
+    defaults: {_format: json}
+    prefix:   /api/attacktypes
+
+attack:
+    type: annotation
+    resource: 'AppBundle\RESTController\AttackController'
+    defaults: {_format: json}
+    prefix:   /api/attack
+
+connection:
+    type: annotation
+    resource: 'AppBundle\RESTController\ConnectionController'
+    defaults: {_format: json}
+    prefix:   /api/connection

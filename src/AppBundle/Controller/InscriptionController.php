@@ -22,7 +22,7 @@ class InscriptionController extends Controller
     public function getInscription()
     {
         return $this->render(
-            'inscription.html.twig'
+            "inscription.html.twig"
         );
     }
 
@@ -31,31 +31,26 @@ class InscriptionController extends Controller
      */
     public function startInscriptionOrConnection(Request $request)
     {
-        $login = '';
-        $password = '';
-        $test = '';
+        $login = "";
+        $password = "";
 
         $request->isXmlHttpRequest();
 
         if ($request != null) {
 
-            if($request->query->get('login') != null) {
-                $login = $request->query->get('loginText');
+            if($request->request->get("login") != null) {
+                $login = $request->request->get("login");
             }
 
-            if($request->query->get('password') != null) {
-                $password = $request->query->get('passwordText');
-            }
-
-            if ($request->attributes->get('login') != null) {
-                $test = $request->attributes->get('login');
+            if($request->request->get("password") != null) {
+                $password = $request->request->get("password");
             }
         }
 
-        if ($login == '' or $password == '') {
+        if ($login == "" or $password == "") {
             return new Response("Login/password vide");
         }
 
-        return new Response("login: " + $login + " Mot de passe: " + $password);
+        return new Response("login: " . $login . " mot de passe: " . $password);
     }
 }
