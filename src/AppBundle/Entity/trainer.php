@@ -12,7 +12,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TrainerRepository")
  * @ORM\Table(name="trainer")
  */
 class Trainer
@@ -86,8 +86,6 @@ class Trainer
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      */
     private $position;
-
-
     /**
      * Constructor
      */

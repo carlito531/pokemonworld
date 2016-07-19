@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BadgeRepository")
  * @ORM\Table(name="badge")
  */
 class Badge
@@ -28,7 +28,6 @@ class Badge
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
      */
     private $name;
-
 
     /**
      * Get id

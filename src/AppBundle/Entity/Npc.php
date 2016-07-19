@@ -12,7 +12,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NpcRepository")
  * @ORM\Table(name="npc")
  */
 class Npc
@@ -48,30 +48,6 @@ class Npc
     private $position;
 
     /**
-     * Set npcType
-     *
-     * @param \AppBundle\Entity\NpcType $npcType
-     *
-     * @return Npc
-     */
-    public function setNpcType(\AppBundle\Entity\NpcType $npcType = null)
-    {
-        $this->npcType = $npcType;
-
-        return $this;
-    }
-
-    /**
-     * Get npcType
-     *
-     * @return \AppBundle\Entity\NpcType
-     */
-    public function getNpcType()
-    {
-        return $this->npcType;
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -79,44 +55,6 @@ class Npc
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Npc
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Set trainer
-     *
-     * @param \AppBundle\Entity\Trainer $trainer
-     *
-     * @return Npc
-     */
-    public function setTrainer(\AppBundle\Entity\Trainer $trainer = null)
-    {
-        $this->trainer = $trainer;
-
-        return $this;
-    }
-
-    /**
-     * Get trainer
-     *
-     * @return \AppBundle\Entity\Trainer
-     */
-    public function getTrainer()
-    {
-        return $this->trainer;
     }
 
     /**
@@ -141,6 +79,54 @@ class Npc
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set npcType
+     *
+     * @param \AppBundle\Entity\NpcType $npcType
+     *
+     * @return Npc
+     */
+    public function setNpcType(\AppBundle\Entity\NpcType $npcType)
+    {
+        $this->npcType = $npcType;
+
+        return $this;
+    }
+
+    /**
+     * Get npcType
+     *
+     * @return \AppBundle\Entity\NpcType
+     */
+    public function getNpcType()
+    {
+        return $this->npcType;
+    }
+
+    /**
+     * Set trainer
+     *
+     * @param \AppBundle\Entity\Trainer $trainer
+     *
+     * @return Npc
+     */
+    public function setTrainer(\AppBundle\Entity\Trainer $trainer = null)
+    {
+        $this->trainer = $trainer;
+
+        return $this;
+    }
+
+    /**
+     * Get trainer
+     *
+     * @return \AppBundle\Entity\Trainer
+     */
+    public function getTrainer()
+    {
+        return $this->trainer;
     }
 
     /**

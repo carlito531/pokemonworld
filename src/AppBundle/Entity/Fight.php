@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FightRepository")
  * @ORM\Table(name="fight")
  */
 class Fight
@@ -59,7 +59,7 @@ class Fight
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param string $date
      *
      * @return Fight
      */
@@ -73,7 +73,7 @@ class Fight
     /**
      * Get date
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDate()
     {
@@ -87,7 +87,7 @@ class Fight
      *
      * @return Fight
      */
-    public function setTrainer1(\AppBundle\Entity\Trainer $trainer1 = null)
+    public function setTrainer1(\AppBundle\Entity\Trainer $trainer1)
     {
         $this->trainer1 = $trainer1;
 
@@ -111,7 +111,7 @@ class Fight
      *
      * @return Fight
      */
-    public function setTrainer2(\AppBundle\Entity\Trainer $trainer2 = null)
+    public function setTrainer2(\AppBundle\Entity\Trainer $trainer2)
     {
         $this->trainer2 = $trainer2;
 

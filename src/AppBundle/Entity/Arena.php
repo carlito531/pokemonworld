@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ArenaRepository")
  * @ORM\Table(name="arena")
  */
 class Arena
@@ -38,7 +38,6 @@ class Arena
      * @ORM\JoinColumn(name="position_id", nullable=false)
      */
     private $position;
-
     /**
      * Constructor
      */
@@ -122,7 +121,7 @@ class Arena
      *
      * @return Arena
      */
-    public function setPosition(\AppBundle\Entity\Position $position = null)
+    public function setPosition(\AppBundle\Entity\Position $position)
     {
         $this->position = $position;
 

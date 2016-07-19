@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PositionRepository")
  * @ORM\Table(name="position")
  */
 class Position
@@ -46,20 +46,29 @@ class Position
     private $zones;
 
     /**
-     * @ORM\OneToMany(targetEntity="Pokemon", mappedBy="objectType")
+     * @ORM\OneToMany(targetEntity="Pokemon", mappedBy="position")
      */
     private $pokemons;
 
     /**
-     * @ORM\OneToMany(targetEntity="Npc", mappedBy="objectType")
+     * @ORM\OneToMany(targetEntity="Npc", mappedBy="position")
      */
     private $npcs;
 
     /**
-     * @ORM\OneToMany(targetEntity="Trainer", mappedBy="objectType")
+     * @ORM\OneToMany(targetEntity="Trainer", mappedBy="position")
      */
     private $trainers;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pokemons = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->trainers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -150,7 +159,7 @@ class Position
      *
      * @return Position
      */
-    public function setZones(\AppBundle\Entity\Zone $zones = null)
+    public function setZones(\AppBundle\Entity\Zone $zones)
     {
         $this->zones = $zones;
 
@@ -165,15 +174,6 @@ class Position
     public function getZones()
     {
         return $this->zones;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pokemons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->trainers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ZoneRepository")
  * @ORM\Table(name="zone")
  */
 class Zone
@@ -32,7 +32,6 @@ class Zone
      * @ORM\OneToMany(targetEntity="Position", mappedBy="zones")
      */
     private $position;
-
     /**
      * Constructor
      */

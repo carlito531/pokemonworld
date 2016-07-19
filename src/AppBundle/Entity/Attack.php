@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AttackRepository")
  * @ORM\Table(name="attack")
  */
 class Attack
@@ -63,7 +63,6 @@ class Attack
      * @ORM\OneToMany(targetEntity="Pokemon", mappedBy="attack4")
      */
     private $pokemons4;
-
     /**
      * Constructor
      */
@@ -164,7 +163,7 @@ class Attack
      *
      * @return Attack
      */
-    public function setAttackType(\AppBundle\Entity\AttackType $attackType = null)
+    public function setAttackType(\AppBundle\Entity\AttackType $attackType)
     {
         $this->attackType = $attackType;
 

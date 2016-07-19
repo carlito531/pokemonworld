@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectTypeRepository")
  * @ORM\Table(name="objectType")
  */
 class ObjectType
@@ -33,7 +33,6 @@ class ObjectType
      * @ORM\OneToMany(targetEntity="Object", mappedBy="objectType")
      */
     private $objects;
-
     /**
      * Constructor
      */

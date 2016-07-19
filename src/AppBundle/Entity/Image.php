@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\Table(name="image")
  */
 class Image
@@ -34,7 +34,6 @@ class Image
      * @ORM\Column(type="string", length=50, name="legend")
      */
     private $legend;
-
 
     /**
      * Get id

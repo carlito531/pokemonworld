@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NpcTypeRepository")
  * @ORM\Table(name="npcType")
  */
 class NpcType
@@ -33,7 +33,13 @@ class NpcType
      * @ORM\OneToMany(targetEntity="Npc", mappedBy="npcType")
      */
     private $npcs;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -67,13 +73,6 @@ class NpcType
     public function getType()
     {
         return $this->type;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->npcs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PokemonRepository")
  * @ORM\Table(name="pokemon")
  */
 class Pokemon
@@ -68,25 +68,25 @@ class Pokemon
     private $pokemonType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks1")
+     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons1")
      * @ORM\JoinColumn(name="attack_id1", referencedColumnName="id", nullable=false)
      */
     private $attack1;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks2")
+     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons2")
      * @ORM\JoinColumn(name="attack_id2", referencedColumnName="id", nullable=false)
      */
     private $attack2;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks3")
+     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons3")
      * @ORM\JoinColumn(name="attack_id3", referencedColumnName="id", nullable=false)
      */
     private $attack3;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="attacks4")
+     * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons4")
      * @ORM\JoinColumn(name="attack_id4", referencedColumnName="id", nullable=false)
      */
     private $attack4;
@@ -288,7 +288,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setPokemonType(\AppBundle\Entity\PokemonType $pokemonType = null)
+    public function setPokemonType(\AppBundle\Entity\PokemonType $pokemonType)
     {
         $this->pokemonType = $pokemonType;
 
@@ -312,7 +312,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setAttack1(\AppBundle\Entity\Attack $attack1 = null)
+    public function setAttack1(\AppBundle\Entity\Attack $attack1)
     {
         $this->attack1 = $attack1;
 
@@ -336,7 +336,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setAttack2(\AppBundle\Entity\Attack $attack2 = null)
+    public function setAttack2(\AppBundle\Entity\Attack $attack2)
     {
         $this->attack2 = $attack2;
 
@@ -360,7 +360,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setAttack3(\AppBundle\Entity\Attack $attack3 = null)
+    public function setAttack3(\AppBundle\Entity\Attack $attack3)
     {
         $this->attack3 = $attack3;
 
@@ -384,7 +384,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setAttack4(\AppBundle\Entity\Attack $attack4 = null)
+    public function setAttack4(\AppBundle\Entity\Attack $attack4)
     {
         $this->attack4 = $attack4;
 
@@ -408,7 +408,7 @@ class Pokemon
      *
      * @return Pokemon
      */
-    public function setPokedex(\AppBundle\Entity\Pokedex $pokedex = null)
+    public function setPokedex(\AppBundle\Entity\Pokedex $pokedex)
     {
         $this->pokedex = $pokedex;
 
