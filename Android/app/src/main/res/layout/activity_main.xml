@@ -12,5 +12,60 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="POKEMON WORLD"
+        android:id="@+id/titleOne"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connection"
+        android:id="@+id/titleTwo"
+        android:layout_below="@+id/titleOne"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/txtLogin"
+        android:layout_below="@+id/titleTwo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="59dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:id="@+id/txtPassword"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtLogin"
+        android:layout_alignBaseline="@+id/txtLogin"
+        android:layout_alignBottom="@+id/txtLogin"
+        android:layout_alignStart="@+id/btnConnect" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtPassword"
+        android:layout_alignBottom="@+id/txtPassword"
+        android:layout_alignStart="@+id/etxtLogin" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connection"
+        android:id="@+id/btnConnect"
+        android:layout_below="@+id/etxtPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp" />
 </RelativeLayout>
