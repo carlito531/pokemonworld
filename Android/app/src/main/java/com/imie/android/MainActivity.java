@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         // When Email Edit View and Password Edit View have values other than Null
         if(email != null && password != null){
             // When Email entered is Valid
-            if(Util.validate(email)){
+            if (Util.validate(email)) {
                 // Put Http parameter username with value of Email Edit View control
                 params.put("login", email);
                 // Put Http parameter password with value of Password Edit Value control
@@ -99,29 +99,27 @@ public class MainActivity extends AppCompatActivity {
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://172.20.10.3:8888/api/connection/", params, new AsyncHttpResponseHandler() {
 
-            // When the response returned by REST has Http response code '200'
+        client.post("http://10.0.2.2:8888/api/connection/", params, new AsyncHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 // Hide Progress Dialog
                 prgDialog.hide();
-                try {
+
+                if (responseBody != null) {
                     String str = new String(responseBody, StandardCharsets.UTF_8);
-                    // JSON Object
-                    JSONObject obj = new JSONObject(str);
-                    // When the JSON response has status boolean value assigned with true
-                    if (obj.getBoolean("status")) {
+                    Boolean connected = Boolean.parseBoolean(str);
+
+                    if (connected) {
                         Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
                     }
-                    // Else display error message
                     else {
-                        errorMsg.setText(obj.getString("error_msg"));
-                        Toast.makeText(getApplicationContext(), obj.getString("error_msg"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Bad credentials", Toast.LENGTH_LONG).show();
                     }
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Bad credentials", Toast.LENGTH_LONG).show();
                 }
             }
 

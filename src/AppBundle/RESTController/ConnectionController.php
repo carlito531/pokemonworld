@@ -48,12 +48,12 @@ class ConnectionController extends FOSRestController
 
             $trainer = $em->getRepository('AppBundle:Trainer')->findOneBy(array('login' => $login));
 
+
             if ($trainer != null) {
-                if ($trainer->getLogin() == $login && $trainer->getPassword() == hash('sha256', $password)) {
+                if ($trainer->getLogin() == $login && $trainer->getPassword() == $password) {
                     $view = $this->view(true, 200)->setFormat('json');
                 }
             } else {
-                $view = $this->view(false, 204)->setFormat('json');
             }
         }
 
