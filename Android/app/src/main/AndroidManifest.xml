@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FightActivity"></activity>
+        <activity android:name=".PokedexActivity"></activity>
     </application>
 
 </manifest>

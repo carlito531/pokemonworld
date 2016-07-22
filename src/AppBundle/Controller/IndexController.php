@@ -18,17 +18,15 @@ class IndexController extends Controller
     /**
      * @Route("/index", name="index")
      */
+
+    /*
     public function getIndex()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entitie = $em->getRepository('AppBundle:AttackType')->find(1);
 
-        $attacktypecontroller = new AttackTypeController();
-        $attacktypecontroller->getAttacktypesListAction();
-
-        var_dump($attacktypecontroller);
-
         return new Response($entitie->getType());
     }
+    */
 }

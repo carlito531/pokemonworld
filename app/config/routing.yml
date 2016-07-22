@@ -10,6 +10,12 @@ attack:
     defaults: {_format: json}
     prefix:   /api/attack
 
+pokemon:
+    type: annotation
+    resource: 'AppBundle\RESTController\PokemonController'
+    defaults: {_format: json}
+    prefix:   /api/pokemon
+
 connection:
     type: annotation
     resource: 'AppBundle\RESTController\ConnectionController'

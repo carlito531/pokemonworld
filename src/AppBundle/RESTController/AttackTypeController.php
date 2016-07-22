@@ -49,7 +49,7 @@ class AttackTypeController extends FOSRestController
      *
      * @return View
      */
-    public function getConnection(Request $request)
+    public function getAttackType(Request $request)
     {
         $type = new AttackType();
         $view = null;
