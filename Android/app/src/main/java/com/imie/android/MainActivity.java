@@ -1,6 +1,7 @@
 package com.imie.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUser(v);
+
+
             }
         });
 
@@ -100,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.post("http://10.0.2.2:8888/api/connection/", params, new AsyncHttpResponseHandler() {
+        client.setTimeout(100000);
+        client.post("http://10.0.2.2:80/api/connection/", params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -113,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
                     if (connected) {
                         Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, PokedexActivity.class);
+                        startActivity(intent);
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Bad credentials", Toast.LENGTH_LONG).show();
@@ -141,5 +147,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+            }
 }
