@@ -1,6 +1,7 @@
 package com.imie.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 
 import cz.msebera.android.httpclient.Header;
+
+import static com.imie.android.R.id.btnConnect;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //errorMsg = (TextView)findViewById(R.id.);
         emailEt = (EditText)findViewById(R.id.etxtLogin);
         pwdEt = (EditText)findViewById(R.id.etxtPassword);
-        connectionBtn = (Button)findViewById(R.id.btnConnect);
+        connectionBtn = (Button)findViewById(btnConnect);
         connectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +56,26 @@ public class MainActivity extends AppCompatActivity {
         prgDialog = new ProgressDialog(this);
         prgDialog.setMessage("Please wait...");
         prgDialog.setCancelable(false);
+
+        final Button loginButton = (Button) findViewById(btnConnect);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PokedexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    /**
+     * Method which navigates from Login Activity to Home Activity
+     */
+    public void navigatetoPokedex(){
+        Intent homeIntent = new Intent(getApplicationContext(),PokedexActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+    }
 
     /**
      *
