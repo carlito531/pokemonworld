@@ -51,6 +51,9 @@ class ConnectionController extends FOSRestController
 
             if ($trainer != null) {
                 if ($trainer->getLogin() == $login && $trainer->getPassword() == $password) {
+                    session_start();
+                    $_SESSION['login'] = $trainer->getLogin();
+
                     $view = $this->view(true, 200)->setFormat('json');
                 }
             } else {

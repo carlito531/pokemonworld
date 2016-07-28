@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,14 +26,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Progress Dialog Object
     ProgressDialog prgDialog;
-    // Error Msg TextView Object
     TextView errorMsg;
-    // Email Edit View Object
+    TextView pseudoTv;
+    EditText pseudoEt;
     EditText emailEt;
-    // Passwprd Edit View Object
     EditText pwdEt;
+    CheckBox isNew;
 
     Button connectionBtn;
 
@@ -40,9 +41,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //errorMsg = (TextView)findViewById(R.id.);
         emailEt = (EditText)findViewById(R.id.etxtLogin);
         pwdEt = (EditText)findViewById(R.id.etxtPassword);
+        pseudoTv = (TextView)findViewById(R.id.txtPseudo);
+        pseudoEt = (EditText) findViewById(R.id.etxtPseudo);
+        isNew = (CheckBox)findViewById(R.id.chkbxInscription);
+        isNew.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "CheckBox checked", Toast.LENGTH_LONG).show();
+                    connectionBtn.setText("Inscription");
+                    pseudoTv.setVisibility(View.VISIBLE);
+                    pseudoEt.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getApplicationContext(), "CheckBox unchecked", Toast.LENGTH_LONG).show();
+                    connectionBtn.setText("Connexion");
+                    pseudoTv.setVisibility(View.INVISIBLE);
+                    pseudoEt.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
         connectionBtn = (Button)findViewById(R.id.btnConnect);
         connectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.setTimeout(100000);
-        client.post("http://10.0.2.2:80/api/connection/", params, new AsyncHttpResponseHandler() {
+        client.post("http://10.0.2.2:8888/api/connection/", params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

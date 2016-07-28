@@ -51,8 +51,11 @@ class PokemonController extends FOSRestController
 
         $pokemon = $em->getRepository('AppBundle:Pokemon')->findOneBy(array('name' => $name));
 
-        $view = $this->view($pokemon, 200)->setFormat('json');
-
+        if ($pokemon != null) {
+            $view = $this->view($pokemon, 200)->setFormat('json');
+        } else {
+            $view = $this->view(false, 204);
+        }
         return $view;
     }
 
