@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArenaRepository")
  * @ORM\Table(name="arena")
+ * @ExclusionPolicy("All")
  */
 class Arena
 {
@@ -25,6 +28,7 @@ class Arena
 
     /**
      * @ORM\Column(type="string", length=50 , name="name", nullable=false)
+     * @Expose
      */
     private $name;
 
@@ -36,6 +40,7 @@ class Arena
     /**
      * @ORM\OneToOne(targetEntity="Position" , cascade={"remove"})
      * @ORM\JoinColumn(name="position_id", nullable=false)
+     * @Expose
      */
     private $position;
     /**

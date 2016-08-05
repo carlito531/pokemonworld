@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\Table(name="image")
+ * @ExclusionPolicy("All")
  */
 class Image
 {
@@ -27,11 +30,13 @@ class Image
     /**
      * @ORM\Column(type="string", length=2083, name="url", nullable=false)
      * 2083 see http://stackoverflow.com/questions/219569/best-database-field-type-for-a-url
+     * @Expose
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=50, name="legend")
+     * @Expose
      */
     private $legend;
 

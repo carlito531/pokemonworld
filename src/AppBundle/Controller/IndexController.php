@@ -8,25 +8,18 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\RESTController\AttackTypeController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
-
-    /**
-     * @Route("/index", name="index")
-     */
-
-    /*
-    public function getIndex()
+    public function showAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entitie = $em->getRepository('AppBundle:AttackType')->find(1);
-
-        return new Response($entitie->getType());
+        return $this->render(
+            "index.html.twig"
+        );
     }
-    */
+
 }

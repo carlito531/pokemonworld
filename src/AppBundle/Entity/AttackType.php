@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AttackTypeRepository")
  * @ORM\Table(name="attackType")
+ * @ExclusionPolicy("All")
  */
 class AttackType
 {
@@ -25,6 +28,7 @@ class AttackType
 
     /**
      * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
+     * @Expose
      */
     private $type;
 

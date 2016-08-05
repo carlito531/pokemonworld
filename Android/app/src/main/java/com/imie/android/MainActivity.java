@@ -27,7 +27,6 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
 
     ProgressDialog prgDialog;
-    TextView errorMsg;
     TextView pseudoTv;
     EditText pseudoEt;
     EditText emailEt;
@@ -50,12 +49,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "CheckBox checked", Toast.LENGTH_LONG).show();
                     connectionBtn.setText("Inscription");
                     pseudoTv.setVisibility(View.VISIBLE);
                     pseudoEt.setVisibility(View.VISIBLE);
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "CheckBox unchecked", Toast.LENGTH_LONG).show();
                     connectionBtn.setText("Connexion");
                     pseudoTv.setVisibility(View.INVISIBLE);
                     pseudoEt.setVisibility(View.INVISIBLE);
@@ -85,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void loginUser(View view){
-        // Get Email Edit View Value
+        // Get values
+        String pseudo = pseudoEt.getText().toString();
         String email = emailEt.getText().toString();
-        // Get Password Edit View Value
         String password = pwdEt.getText().toString();
+
         // Instantiate Http Request Param Object
         RequestParams params = new RequestParams();
         // When Email Edit View and Password Edit View have values other than Null
@@ -99,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 params.put("login", email);
                 // Put Http parameter password with value of Password Edit Value control
                 params.put("password", Util.toSha256(password));
+
+                if (pseudo != null) {
+                    params.put("pseudo", pseudo);
+                }
+
                 // Invoke RESTful Web Service with Http parameters
                 invokeWS(params);
             }
@@ -132,16 +136,25 @@ public class MainActivity extends AppCompatActivity {
                 prgDialog.hide();
 
                 if (responseBody != null) {
-                    String str = new String(responseBody, StandardCharsets.UTF_8);
-                    Boolean connected = Boolean.parseBoolean(str);
+                    String response = new String(responseBody, StandardCharsets.UTF_8);
 
-                    if (connected) {
-                        Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, PokedexActivity.class);
+                    response = Util.escapeDoubleQuotes(response);
+
+                    // if user is connected
+                    if (response.equals("User connected")) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, FightActivity.class);
+                        startActivity(intent);
+
+                    // if user is registred
+                    } else if (response.equals("User registred")) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, FightActivity.class);
                         startActivity(intent);
                     }
+                    // otherwise
                     else {
-                        Toast.makeText(getApplicationContext(), "Bad credentials", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No response from server", Toast.LENGTH_LONG).show();
                     }
 
                 } else {

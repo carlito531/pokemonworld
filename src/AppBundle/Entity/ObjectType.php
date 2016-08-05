@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectTypeRepository")
  * @ORM\Table(name="objectType")
+ * @ExclusionPolicy("All")
  */
 class ObjectType
 {
@@ -26,6 +29,7 @@ class ObjectType
 
     /**
      * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
+     * @Expose
      */
     private $type;
 
@@ -33,6 +37,7 @@ class ObjectType
      * @ORM\OneToMany(targetEntity="Object", mappedBy="objectType")
      */
     private $objects;
+
     /**
      * Constructor
      */

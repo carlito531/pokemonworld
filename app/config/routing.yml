@@ -1,3 +1,13 @@
+# Web site controllers
+index:
+    path:     /index
+    defaults:  { _controller: AppBundle:Index:show }
+
+/inscription:
+    type:     annotation
+    resource: 'AppBundle\Controller\InscriptionController'
+
+# Rest api controllers
 attacktypes:
     type: annotation
     resource: 'AppBundle\RESTController\AttackTypeController'

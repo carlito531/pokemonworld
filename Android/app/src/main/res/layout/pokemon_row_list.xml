@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivPokemonListAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        tools:background="#AAA"
+        />
+
+    <TextView
+        android:id="@+id/tvPokemonListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/ivPokemonListAvatar"
+        android:layout_alignTop="@+id/ivPokemonListAvatar"
+        android:textStyle="bold"
+        tools:text="Nom pokemon" />
+
+    <TextView
+        android:id="@+id/tvPokemonListType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListName"
+        android:layout_below="@+id/tvPokemonListName"
+        tools:text="Type pokemon" />
+
+    <TextView
+        android:id="@+id/tvPokemonListLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListType"
+        android:layout_below="@+id/tvPokemonListType"
+        tools:text="Niveau" />
+
+    <TextView
+        android:id="@+id/tvPokemonListExperience"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListLevel"
+        android:layout_below="@+id/tvPokemonListLevel"
+        tools:text="Experience" />
+
+    <TextView
+        android:id="@+id/tvPokemonListHp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListExperience"
+        android:layout_below="@+id/tvPokemonListExperience"
+        tools:text="HP" />
+
+    <TextView
+        android:id="@+id/tvPokemonListAttack1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/tvPokemonListName"
+        tools:text="Attaque 1" />
+
+    <TextView
+        android:id="@+id/tvPokemonListAttack2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListAttack1"
+        android:layout_below="@+id/tvPokemonListAttack1"
+        tools:text="Attaque 2" />
+
+    <TextView
+        android:id="@+id/tvPokemonListAttack3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListAttack2"
+        android:layout_below="@+id/tvPokemonListAttack2"
+        tools:text="Attaque 3" />
+
+    <TextView
+        android:id="@+id/tvPokemonListAttack4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvPokemonListAttack3"
+        android:layout_below="@+id/tvPokemonListAttack3"
+        tools:text="Attaque 4" />
+
+</RelativeLayout>

@@ -27,13 +27,17 @@ class PokemonController extends FOSRestController
      *
      * @return View
      */
-    public function getPokemons($name)
+    public function getPokemons()
     {
         $em = $this->getDoctrine()->getManager();
 
         $pokemons = $em->getRepository('AppBundle:Pokemon')->findAll();
 
-        $view = $this->view($pokemons, 200)->setFormat('json');
+        if ($pokemons != null) {
+            $view = $this->view($pokemons, 200)->setFormat('json');
+        } else {
+            $view = $this->view(false, 500);
+        }
 
         return $view;
     }

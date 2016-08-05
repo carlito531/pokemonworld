@@ -68,7 +68,7 @@ swiftmailer:
     spool:     { type: memory }
 
 sensio_framework_extra:
-    view:   { annotations: false }
+    view:   { annotations: true }
     router: { annotations: true }
 
 # FOSrest configuration

@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BadgeRepository")
  * @ORM\Table(name="badge")
+ * @ExclusionPolicy("All")
  */
 class Badge
 {
@@ -26,6 +29,7 @@ class Badge
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @Expose
      */
     private $name;
 

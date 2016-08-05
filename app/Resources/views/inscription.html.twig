@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid">
+    <div class="container-fluid" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <header class="row">
             <div class="col-md-4">
                 <img src="{{ asset('images/pokeball_flat.png') }}" width="150px" height="150px" />
@@ -15,52 +15,72 @@
         </header>
         </br></br>
         <div class="row">
-            <div class="col-md-8 col-md-offset-4">
+            <div class="col-md-12">
                 <div class="row">
-                    <div class="row">
-                        <h4 style="text-align: justify"> Veuillez entrer votre identifiant et votre mot de passe
-                            </br>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-md-12">
+                            Veuillez entrer votre identifiant et votre mot de passe
                             afin de vous connecter à l'application.
                             </br>
                             Si vous ne possédez pas encore de compte,
-                            </br>
                             cliquer sur le bouton <b>inscription.</b>
-                        </h4>
-                    </div>
-                    </br></br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="loginText">Identifiant : </label>
-                        </div>
-                        <div class="col-md-4">
-                            <input id="loginText" type="text" name="loginText"> <br>
                         </div>
                     </div>
                     </br></br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="passwordText">Mot de passe : </label>
+                    <form method="POST" action="/inscription/getConnection">
+                        <div class="row" id="nameGrp" style="text-align: center; display: none;">
+                            <div class="col-md-6">
+                                <label for="nameText">Pseudo : </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input id="nameText" type="text" name="nameText"> <br>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <input id="passwordText" type="password" name="passwordText"><br>
+                        </br></br>
+                        <div class="row" style="text-align: center">
+                            <div class="col-md-6">
+                                <label for="loginText">Identifiant : </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input id="loginText" type="email" name="loginText"> <br>
+                            </div>
                         </div>
-                    </div>
-                    </br></br>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <input id="connection" type="submit" name="connectionBtn" value="Connexion" />
+                        </br></br>
+                        <div class="row" style="text-align: center">
+                            <div class="col-md-6">
+                                <label for="passwordText">Mot de passe : </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input id="passwordText" type="password" name="passwordText"><br>
+                            </div>
                         </div>
-                    </div>
+                        </br></br>
+                        <div class="row" style="text-align: center">
+                            <div class="col-md-6">
+                                <input type="checkbox" id="chkInscription" name="chkInscription">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="chkInscription">Vous n'avez pas encore de compte ?</label>
+                            </div>
+                        </div>
+                        </br></br>
+                        <div class="row">
+                            <div class="col-md-12" style="text-align: center">
+                                <input id="connection" type="submit" name="connectionBtn" value="Connexion" />
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12" style="text-align: center">
+                                <textarea id="errMsg" type="textfield" style="color: red; display: none; border: none" readonly/></textarea>
+                            </div>
+                        </div>
+                    </form>
                     </br>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <input id="inscription" type="submit" name="inscriptionBtn" value="Inscription" />
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/inscriptionController.js') }}"> </script>
     </div>
+    <script src="{{ asset('js/inscription.js') }}"> </script>
 
 {% endblock %}

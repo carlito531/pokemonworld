@@ -10,10 +10,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NpcRepository")
  * @ORM\Table(name="npc")
+ * @ExclusionPolicy("All")
  */
 class Npc
 {
@@ -26,12 +29,14 @@ class Npc
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false)
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="NpcType", inversedBy="npcs")
      * @ORM\JoinColumn(name="npctype_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $npcType;
 
@@ -44,6 +49,7 @@ class Npc
     /**
      * @ORM\ManyToOne(targetEntity="Position", inversedBy="npcs")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $position;
 

@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PositionRepository")
  * @ORM\Table(name="position")
+ * @ExclusionPolicy("All")
  */
 class Position
 {
@@ -25,23 +28,27 @@ class Position
 
     /**
      * @ORM\Column(type="float", name="latitude", nullable=false)
+     * @Expose
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float", name="longitude", nullable=false)
+     * @Expose
      */
     private $longitude;
 
     /**
      * @ORM\OneToOne(targetEntity="Arena", cascade={"remove"})
      * @ORM\JoinColumn(name="arena_id")
+     * @Expose
      */
     private $arena;
 
     /**
      * @ORM\ManyToOne(targetEntity="Zone", inversedBy="position")
      * @ORM\JoinColumn(name="zone_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $zones;
 

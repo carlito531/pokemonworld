@@ -9,10 +9,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\XmlRoot;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PokemonRepository")
  * @ORM\Table(name="pokemon")
+ * @ExclusionPolicy("All")
+ * @XmlRoot("pokemon")
  */
 class Pokemon
 {
@@ -25,21 +30,25 @@ class Pokemon
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", name="level", nullable=false)
+     * @Expose
      */
     private $level;
 
     /**
      * @ORM\Column(type="integer", name="experience", nullable=false)
+     * @Expose
      */
     private $experience;
 
     /**
      * @ORM\Column(type="integer", name="hp", nullable=false)
+     * @Expose
      */
     private $hp;
 
@@ -64,30 +73,35 @@ class Pokemon
     /**
      * @ORM\ManyToOne(targetEntity="PokemonType", inversedBy="pokemons")
      * @ORM\JoinColumn(name="pokemonType_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $pokemonType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons1")
      * @ORM\JoinColumn(name="attack_id1", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $attack1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons2")
      * @ORM\JoinColumn(name="attack_id2", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $attack2;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons3")
      * @ORM\JoinColumn(name="attack_id3", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $attack3;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attack", inversedBy="pokemons4")
      * @ORM\JoinColumn(name="attack_id4", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $attack4;
 

@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FightRepository")
  * @ORM\Table(name="fight")
+ * @ExclusionPolicy("All")
  */
 class Fight
 {
@@ -25,24 +28,28 @@ class Fight
 
     /**
      * @ORM\Column(type="string", name="date", nullable=false)
+     * @Expose
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="player")
      * @ORM\JoinColumn(name="trainer_id1", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $trainer1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="opponent")
      * @ORM\JoinColumn(name="trainer_id2", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $trainer2;
 
     /**
      * @ORM\ManyToOne(targetEntity="Arena", inversedBy="fights")
      * @ORM\JoinColumn(name="arena_id", referencedColumnName="id")
+     * @Expose
      */
     private $arena;
 

@@ -10,10 +10,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TrainerRepository")
  * @ORM\Table(name="trainer")
+ * @ExclusionPolicy("All")
  */
 class Trainer
 {
@@ -27,11 +30,13 @@ class Trainer
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50, name="login", nullable=false, unique=true)
+     * @Expose
      */
     private $login;
 
@@ -42,6 +47,7 @@ class Trainer
 
     /**
      * @ORM\Column(type="boolean", name="isMaster")
+     * @Expose
      */
     private $isMaster;
 
@@ -58,6 +64,7 @@ class Trainer
 
     /**
      * @ORM\ManyToMany(targetEntity="Badge")
+     * @Expose
      */
     private $badges;
 
@@ -84,6 +91,7 @@ class Trainer
     /**
      * @ORM\ManyToOne(targetEntity="Position", inversedBy="trainers")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $position;
     /**

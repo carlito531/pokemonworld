@@ -36,7 +36,21 @@ class LoadPokemonData extends AbstractFixture implements OrderedFixtureInterface
         $pokemon->setAttack4($this->getReference('attaque-mimiqueue'));
         $pokemon->setPokedex($this->getReference('pokedex'));
 
+        $pokemon1 = new Pokemon();
+        $pokemon1->setName('Pikachu');
+        $pokemon1->setExperience(80);
+        $pokemon1->setHp(100);
+        $pokemon1->setLevel(1);
+        $pokemon1->setPokemonType($this->getReference('pokemontype-electrique'));
+        $pokemon1->setPosition($this->getReference('position-ville'));
+        $pokemon1->setAttack1($this->getReference('attaque-eclair'));
+        $pokemon1->setAttack2($this->getReference('attaque-tonnerre'));
+        $pokemon1->setAttack3($this->getReference('attaque-viveattaque'));
+        $pokemon1->setAttack4($this->getReference('attaque-mimiqueue'));
+        $pokemon1->setPokedex($this->getReference('pokedex'));
+
         $manager->persist($pokemon);
+        $manager->persist($pokemon1);
         $manager->flush();
 
         $this->addReference('pokemon-raichu', $pokemon);

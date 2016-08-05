@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ObjectRepository")
  * @ORM\Table(name="object")
+ * @ExclusionPolicy("All")
  */
 class Object
 {
@@ -25,11 +28,13 @@ class Object
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", name="quantity", nullable=false)
+     * @Expose
      */
     private $quantity;
 
@@ -42,12 +47,14 @@ class Object
     /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="object")
      * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
+     * @Expose
      */
     private $trainers;
 
     /**
      * @ORM\ManyToOne(targetEntity="ObjectType", inversedBy="objects")
      * @ORM\JoinColumn(name="objectType_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $objectType;
 

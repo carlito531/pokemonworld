@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NpcTypeRepository")
  * @ORM\Table(name="npcType")
+ * @ExclusionPolicy("All")
  */
 class NpcType
 {
@@ -26,6 +29,7 @@ class NpcType
 
     /**
      * @ORM\Column(type="string", length=50, name="type", nullable=false, unique=true)
+     * @Expose
      */
     private $type;
 

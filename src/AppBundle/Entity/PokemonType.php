@@ -9,10 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PokemonTypeRepository")
  * @ORM\Table(name="pokemonType")
+ * @ExclusionPolicy("All")
  */
 class PokemonType
 {
@@ -25,6 +28,7 @@ class PokemonType
 
     /**
      * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @Expose
      */
     private $name;
 
@@ -37,6 +41,7 @@ class PokemonType
      * @ORM\ManyToMany(targetEntity="Zone")
      */
     private $zones;
+
     /**
      * Constructor
      */

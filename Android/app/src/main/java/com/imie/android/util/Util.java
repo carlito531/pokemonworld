@@ -49,4 +49,16 @@ public class Util {
         return sb.toString();
     }
 
+    /**
+     * Return string without double quotes
+     * @param str
+     * @return
+     */
+    public static String escapeDoubleQuotes(String str) {
+        if (str.contains("\"")) {
+            str = str.split("\"")[1];
+        }
+        return str;
+    }
+
 }
