@@ -7,24 +7,20 @@ package com.imie.android.model;
 public class Pokemon {
 
     String name;
-    String attack1;
-    String attack2;
-    String attack3;
-    String attack4;
-    String type;
+    Attack attack1;
+    Attack attack2;
+    Attack attack3;
+    Attack attack4;
+    PokemonType pokemon_type;
     Integer level;
     Integer experience;
     Integer hp;
 
-    public Pokemon(String name, String attack1, String attack2, String attack3, String attack4, String type, Integer level, Integer experience, Integer hp) {
-        this.name = name;
-        this.attack1 = attack1;
-        this.attack2 = attack2;
-        this.attack3 = attack3;
-        this.attack4 = attack4;
-        this.type = type;
-        this.level = level;
-        this.experience = experience;
+    public Integer getHp() {
+        return hp;
+    }
+
+    public void setHp(Integer hp) {
         this.hp = hp;
     }
 
@@ -36,44 +32,44 @@ public class Pokemon {
         this.name = name;
     }
 
-    public String getAttack1() {
+    public Attack getAttack1() {
         return attack1;
     }
 
-    public void setAttack1(String attack1) {
+    public void setAttack1(Attack attack1) {
         this.attack1 = attack1;
     }
 
-    public String getAttack2() {
+    public Attack getAttack2() {
         return attack2;
     }
 
-    public void setAttack2(String attack2) {
+    public void setAttack2(Attack attack2) {
         this.attack2 = attack2;
     }
 
-    public String getAttack3() {
+    public Attack getAttack3() {
         return attack3;
     }
 
-    public void setAttack3(String attack3) {
+    public void setAttack3(Attack attack3) {
         this.attack3 = attack3;
     }
 
-    public String getAttack4() {
+    public Attack getAttack4() {
         return attack4;
     }
 
-    public void setAttack4(String attack4) {
+    public void setAttack4(Attack attack4) {
         this.attack4 = attack4;
     }
 
-    public String getType() {
-        return type;
+    public PokemonType getPokemonType() {
+        return pokemon_type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPokemonType(PokemonType pokemonType) {
+        this.pokemon_type = pokemonType;
     }
 
     public Integer getLevel() {
@@ -90,13 +86,5 @@ public class Pokemon {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
-    }
-
-    public Integer getHp() {
-        return hp;
-    }
-
-    public void setHp(Integer hp) {
-        this.hp = hp;
     }
 }

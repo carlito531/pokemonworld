@@ -1,6 +1,8 @@
 package com.imie.android.ViewHelper;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,15 +52,16 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         Pokemon pokemon = getItem(position);
 
         // fill the view
+        viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
         viewHolder.name.setText(pokemon.getName());
-        viewHolder.type.setText(pokemon.getType());
-        viewHolder.level.setText(pokemon.getLevel());
-        viewHolder.experience.setText(pokemon.getExperience());
-        viewHolder.hp.setText(pokemon.getHp());
-        viewHolder.attack1.setText(pokemon.getAttack1());
-        viewHolder.attack1.setText(pokemon.getAttack2());
-        viewHolder.attack1.setText(pokemon.getAttack3());
-        viewHolder.attack1.setText(pokemon.getAttack4());
+        viewHolder.attack1.setText(pokemon.getAttack1().getName());
+        viewHolder.attack2.setText(pokemon.getAttack2().getName());
+        viewHolder.attack3.setText(pokemon.getAttack3().getName());
+        viewHolder.attack4.setText(pokemon.getAttack4().getName());
+        viewHolder.type.setText(pokemon.getPokemonType().getName());
+        viewHolder.level.setText(pokemon.getLevel().toString());
+        viewHolder.experience.setText(pokemon.getExperience().toString());
+        viewHolder.hp.setText(pokemon.getHp().toString());
 
         return convertView;
     }
