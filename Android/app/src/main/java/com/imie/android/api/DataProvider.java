@@ -7,9 +7,16 @@ import java.util.List;
  */
 public class DataProvider<T> {
 
-    //private Class<T> clazz;
-
+    private T item;
     private List<T> listItems;
+
+    public T getItem() {
+        return item;
+    }
+
+    public void setItem(T item) {
+        this.item = item;
+    }
 
     public List<T> getItems() {
         return listItems;

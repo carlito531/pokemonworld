@@ -10,6 +10,8 @@ namespace AppBundle\RESTController;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\Trainer;
+use AppBundle\Entity\Position;
+use AppBundle\Entity\Zone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +65,7 @@ class ConnectionController extends FOSRestController
                         session_start();
                         $_SESSION['login'] = $trainer->getLogin();
 
-                        $view = $this->view("User connected", 200);
+                        $view = $this->view("User connected", 200)->setFormat('json');
                     }
                 } else {
                     $view = $this->view(false, 500)->setFormat('json');
@@ -98,22 +100,44 @@ class ConnectionController extends FOSRestController
 
                 // set the no nullable columns
                 $trainer->setIsMaster(false);
-                $trainer->setPosition($em->getRepository('AppBundle:Position')->find(3));
+                $trainer->setPosition($this->setStartPosition());
 
                 // save the new user in database
                 $em->persist($trainer);
                 $em->flush();
 
-                $view = $this->view("User registred", 201);
+                // put the new user in session
+                session_start();
+                $_SESSION['login'] = $trainer->getLogin();
+
+                $view = $this->view("User registred", 201)->setFormat('json');
             } else {
-                $view = $this->view(false, 500)->setFormat('json');
+                $view = $this->view("Identifiants manquants", 500)->setFormat('json');
             }
 
         } catch (\Exception $e) {
-            print_r($e->getMessage());
+            $view = $this->view($e->getMessage(), 500);
         }
 
         return $view;
+    }
+
+
+    private function setStartPosition() {
+
+        $position = null;
+
+        try {
+            $em = $this->getDoctrine()->getManager();
+
+            $zone = $em->getRepository('AppBundle:Zone')->findOneBy(array('name' => 'Depart'));
+            $position = $zone->getPosition()[0];
+
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
+
+        return $position;
     }
 
 }

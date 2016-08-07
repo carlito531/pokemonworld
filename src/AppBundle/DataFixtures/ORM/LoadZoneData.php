@@ -26,10 +26,15 @@ class LoadZoneData extends AbstractFixture implements OrderedFixtureInterface
         $ville = new Zone();
         $ville->setName('Ville');
 
+        $startZone = new Zone();
+        $startZone->setName("Depart");
+
         $manager->persist($ville);
+        $manager->persist($startZone);
         $manager->flush();
 
         $this->addReference('zone-ville', $ville);
+        $this->addReference('depart', $startZone);
     }
 
     /**

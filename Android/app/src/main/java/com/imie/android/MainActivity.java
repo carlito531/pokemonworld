@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imie.android.api.PokemonWS;
+import com.imie.android.api.TrainerWS;
+import com.imie.android.model.Pokemon;
+import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -23,6 +27,11 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,102 +92,59 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void loginUser(View view){
+
         // Get values
         String pseudo = pseudoEt.getText().toString();
         String email = emailEt.getText().toString();
         String password = pwdEt.getText().toString();
 
-        // Instantiate Http Request Param Object
-        RequestParams params = new RequestParams();
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8888")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         // When Email Edit View and Password Edit View have values other than Null
-        if(email != null && password != null){
+        if(!email.equals("") && !password.equals("")){
             // When Email entered is Valid
             if (Util.validate(email)) {
-                // Put Http parameter username with value of Email Edit View control
-                params.put("login", email);
-                // Put Http parameter password with value of Password Edit Value control
-                params.put("password", Util.toSha256(password));
 
-                if (pseudo != null) {
-                    params.put("pseudo", pseudo);
-                }
+                // Get pokemon searched by calling the symfony api
+                TrainerWS service = retrofit.create(TrainerWS.class);
 
-                // Invoke RESTful Web Service with Http parameters
-                invokeWS(params);
-            }
-            // When Email is invalid
-            else{
-                Toast.makeText(getApplicationContext(), "Please enter valid email", Toast.LENGTH_LONG).show();
+                Call<String> item = service.getConnection(email, Util.toSha256(password), pseudo);
+                item.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Response<String> response, Retrofit retrofit) {
+                        if (response.code() == 200) {
+                            // put user login in shared preferences
+
+                            Toast.makeText(getApplicationContext(), "Utilisateur connecté", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, FightActivity.class);
+                            startActivity(intent);
+
+                        } else if (response.code() == 201) {
+                            Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, FightActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Mauvais identifiants", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Le serveur ne répond pas", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } else{
+                Toast.makeText(getApplicationContext(), "Entrez un e-mail valide", Toast.LENGTH_LONG).show();
             }
         } else{
-            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Veuillez remplir tout les champs", Toast.LENGTH_LONG).show();
         }
     }
-
-
-    /**
-     * Method that performs RESTful webservice invocations
-     *
-     * @param params
-     */
-    public void invokeWS(RequestParams params){
-        // Show Progress Dialog
-        prgDialog.show();
-        // Make RESTful webservice call using AsyncHttpClient object
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.setTimeout(100000);
-        client.post("http://10.0.2.2:8888/api/connection/", params, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-
-                if (responseBody != null) {
-                    String response = new String(responseBody, StandardCharsets.UTF_8);
-
-                    response = Util.escapeDoubleQuotes(response);
-
-                    // if user is connected
-                    if (response.equals("User connected")) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, FightActivity.class);
-                        startActivity(intent);
-
-                    // if user is registred
-                    } else if (response.equals("User registred")) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, FightActivity.class);
-                        startActivity(intent);
-                    }
-                    // otherwise
-                    else {
-                        Toast.makeText(getApplicationContext(), "No response from server", Toast.LENGTH_LONG).show();
-                    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Bad credentials", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                // When Http response code is '404'
-                if (statusCode == 404){
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if (statusCode == 500){
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else {
-                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-            }
 }

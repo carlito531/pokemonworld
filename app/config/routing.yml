@@ -26,6 +26,12 @@ pokemon:
     defaults: {_format: json}
     prefix:   /api/pokemon
 
+trainer:
+    type: annotation
+    resource: 'AppBundle\RESTController\TrainerController'
+    defaults: {_format: json}
+    prefix:   /api/trainer
+
 connection:
     type: annotation
     resource: 'AppBundle\RESTController\ConnectionController'

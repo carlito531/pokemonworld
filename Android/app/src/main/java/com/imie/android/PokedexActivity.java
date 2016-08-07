@@ -10,6 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imie.android.ViewHelper.TrainerListViewAdapter;
+import com.imie.android.api.DataProvider;
+import com.imie.android.api.PokemonWS;
+import com.imie.android.api.TrainerWS;
+import com.imie.android.model.Pokemon;
+import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,8 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by rvano_000 on 7/20/2016.
@@ -53,38 +65,69 @@ public class PokedexActivity extends AppCompatActivity {
         rechercher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPokemonInformations(v);
+                getPokemon();
             }
         });
     }
 
-    /**
-     *
-     *
-     * @param view
-     */
-    public void getPokemonInformations(View view){
 
-        String name = nameSearch.getText().toString();
+    public void getPokemon(){
 
-        // Instantiate Http Request Param Object
-        // RequestParams params = new RequestParams();
-        // When Email Edit View and Password Edit View have values other than Null
-        if (name != null) {
-            invokeWS(name);
-        } else{
-            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
-        }
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8888")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Get pokemon searched by calling the symfony api
+        PokemonWS service = retrofit.create(PokemonWS.class);
+
+        Call<Pokemon> item = service.getPokemon(nameSearch.getText().toString());
+        item.enqueue(new Callback<Pokemon>() {
+            @Override
+            public void onResponse(Response<Pokemon> response, Retrofit retrofit) {
+                DataProvider.getInstance().setItem(response.body());
+
+                Pokemon pokemonResult = response.body();
+
+                if (pokemonResult != null) {
+                    name.setText("Nom: " + pokemonResult.getName());
+                    name.setVisibility(View.VISIBLE);
+                    type.setText("Type: " + pokemonResult.getPokemonType().getName());
+                    type.setVisibility(View.VISIBLE);
+                    attack1.setText("Attaque 1: " + pokemonResult.getAttack1().getName());
+                    attack1.setVisibility(View.VISIBLE);
+                    attack2.setText("Attaque 2: " + pokemonResult.getAttack2().getName());
+                    attack2.setVisibility(View.VISIBLE);
+                    attack3.setText("Attaque 3: " + pokemonResult.getAttack3().getName());
+                    attack3.setVisibility(View.VISIBLE);
+                    attack4.setText("Attaque 4: " + pokemonResult.getAttack4().getName());
+                    attack4.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getApplication(),"Pokemon non trouvé", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(getApplication(),"Le serveur ne répond pas", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
+
 
     /**
      * Method that performs RESTful webservice invocations
      *
      * @param pokemon
-     */
+     *
     public void invokeWS(String pokemon) {
 
-        // Make RESTful webservice call using AsyncHttpClient object
+        /* Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.setTimeout(100000);
@@ -162,4 +205,5 @@ public class PokedexActivity extends AppCompatActivity {
             }
         });
     }
+    */
 }

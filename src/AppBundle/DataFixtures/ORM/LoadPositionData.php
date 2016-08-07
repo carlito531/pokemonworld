@@ -30,7 +30,13 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $position->setLongitude('-3.4449429999999666');
         $position->setZones($this->getReference('zone-ville'));
 
+        $startPosition = new Position();
+        $startPosition->setLatitude('48.7453968');
+        $startPosition->setLongitude('-3.5397994');
+        $startPosition->setZones($this->getReference('depart'));
+
         $manager->persist($position);
+        $manager->persist($startPosition);
         $manager->flush();
 
         $this->addReference('position-ville', $position);

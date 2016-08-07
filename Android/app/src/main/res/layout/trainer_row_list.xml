@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivTrainerListAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        tools:background="#AAA"
+        />
+
+    <TextView
+        android:id="@+id/tvTrainerListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/ivTrainerListAvatar"
+        android:layout_alignTop="@+id/ivTrainerListAvatar"
+        android:textStyle="bold"
+        tools:text="Nom dresseur" />
+
+    <TextView
+        android:id="@+id/tvTrainerListBadges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/tvTrainerListName"
+        android:layout_below="@+id/tvTrainerListName"
+        tools:text="Badges" />
+
+</RelativeLayout>

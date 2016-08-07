@@ -31,9 +31,9 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.pokemon_row_list,parent, false);
         }
 
-        TweetViewHolder viewHolder = (TweetViewHolder) convertView.getTag();
+        PokemonViewHolder viewHolder = (PokemonViewHolder) convertView.getTag();
         if(viewHolder == null){
-            viewHolder = new TweetViewHolder();
+            viewHolder = new PokemonViewHolder();
             viewHolder.avatar = (ImageView) convertView.findViewById(R.id.ivPokemonListAvatar);
             viewHolder.name = (TextView) convertView.findViewById(R.id.tvPokemonListName);
             viewHolder.type = (TextView) convertView.findViewById(R.id.tvPokemonListType);
@@ -53,20 +53,20 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
 
         // fill the view
         viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
-        viewHolder.name.setText(pokemon.getName());
-        viewHolder.attack1.setText(pokemon.getAttack1().getName());
-        viewHolder.attack2.setText(pokemon.getAttack2().getName());
-        viewHolder.attack3.setText(pokemon.getAttack3().getName());
-        viewHolder.attack4.setText(pokemon.getAttack4().getName());
-        viewHolder.type.setText(pokemon.getPokemonType().getName());
-        viewHolder.level.setText(pokemon.getLevel().toString());
-        viewHolder.experience.setText(pokemon.getExperience().toString());
-        viewHolder.hp.setText(pokemon.getHp().toString());
+        viewHolder.name.setText("Nom: " + pokemon.getName());
+        viewHolder.attack1.setText("Attaque 1: " + pokemon.getAttack1().getName());
+        viewHolder.attack2.setText("Attaque 2: " + pokemon.getAttack2().getName());
+        viewHolder.attack3.setText("Attaque 3: " + pokemon.getAttack3().getName());
+        viewHolder.attack4.setText("Attaque 4 " + pokemon.getAttack4().getName());
+        viewHolder.type.setText("Type: " + pokemon.getPokemonType().getName());
+        viewHolder.level.setText("Niveau: " + pokemon.getLevel().toString());
+        viewHolder.experience.setText("Experience: " + pokemon.getExperience().toString());
+        viewHolder.hp.setText("PV: " + pokemon.getHp().toString());
 
         return convertView;
     }
 
-    private class TweetViewHolder{
+    private class PokemonViewHolder{
         public ImageView avatar;
         public TextView name;
         public TextView type;
