@@ -1,7 +1,9 @@
 package com.imie.android;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,28 +14,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.imie.android.api.PokemonWS;
 import com.imie.android.api.TrainerWS;
-import com.imie.android.model.Pokemon;
-import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.nio.charset.StandardCharsets;
-
-import cz.msebera.android.httpclient.Header;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class ConnectionActivity extends AppCompatActivity {
 
     ProgressDialog prgDialog;
     TextView pseudoTv;
@@ -118,14 +108,15 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Response<String> response, Retrofit retrofit) {
                         if (response.code() == 200) {
                             // put user login in shared preferences
+                            Util.saveToSharedPreferences("userLogin", emailEt.getText().toString(), getApplicationContext());
 
                             Toast.makeText(getApplicationContext(), "Utilisateur connecté", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(MainActivity.this, FightActivity.class);
+                            Intent intent = new Intent(ConnectionActivity.this, HomeActivity.class);
                             startActivity(intent);
 
                         } else if (response.code() == 201) {
                             Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(MainActivity.this, FightActivity.class);
+                            Intent intent = new Intent(ConnectionActivity.this, HomeActivity.class);
                             startActivity(intent);
 
                         } else {

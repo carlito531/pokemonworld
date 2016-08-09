@@ -5,6 +5,7 @@ namespace AppBundle\RESTController;
 use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\Trainer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -53,12 +54,18 @@ class TrainerController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $trainer = $em->getRepository('AppBundle:Trainer')->findOneBy(array('name' => $name));
+        try {
+            $trainer = $em->getRepository('AppBundle:Trainer')->findOneBy(array('login' => $name));
 
-        if ($trainer != null) {
-            $view = $this->view($trainer, 200)->setFormat('json');
-        } else {
-            $view = $this->view(false, 204);
+            if ($trainer != null) {
+                $view = $this->view($trainer, 200)->setFormat('json');
+            } else {
+                $view = $this->view(false, 204);
+            }
+
+        } catch (Exception $e) {
+            $view = $this->view($e->getMessage());
+            var_dump($e->getMessage());
         }
         return $view;
     }

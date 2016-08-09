@@ -44,10 +44,16 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/Map"
+                    android:id="@+id/Resume"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <fragment
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:name="com.google.android.gms.maps.MapFragment"
+                        android:id="@+id/map" />
                 </LinearLayout>
 
                 <LinearLayout

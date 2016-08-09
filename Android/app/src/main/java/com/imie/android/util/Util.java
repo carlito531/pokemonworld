@@ -1,5 +1,8 @@
 package com.imie.android.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import java.security.MessageDigest;
@@ -59,6 +62,31 @@ public class Util {
             str = str.split("\"")[1];
         }
         return str;
+    }
+
+    /**
+     * Save something in sharedPreferences
+     * @param key
+     * @param value
+     * @param context
+     */
+    public static void saveToSharedPreferences(String key, String value, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    /**
+     * Get something saved in sharedPreferences
+     * @param key
+     * @param context
+     * @return
+     */
+    public static String getSharedPreferences(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
     }
 
 }
