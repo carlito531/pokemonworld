@@ -15,13 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:textColor="@android:color/white"
-        android:text="Combat"
+        android:text="Exploration"
         android:id="@+id/btnHomeFight" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:textColor="@android:color/white"
-        android:text="Carte"
-        android:id="@+id/btnHomeMap" />
+        android:text="Mes Pokemons"
+        android:id="@+id/btnHomePokemon" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textColor="@android:color/white"
+        android:text="Mon Dresseur"
+        android:id="@+id/btnHomeTrainer" />
 </LinearLayout>

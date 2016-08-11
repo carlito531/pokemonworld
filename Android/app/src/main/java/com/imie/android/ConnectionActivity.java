@@ -1,9 +1,7 @@
 package com.imie.android;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.imie.android.api.TrainerWS;
+import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.util.Util;
 
 import retrofit.Call;
@@ -90,7 +88,7 @@ public class ConnectionActivity extends AppCompatActivity {
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8888")
+                .baseUrl(Util.getApiUrlBase(getApplicationContext()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -115,6 +113,9 @@ public class ConnectionActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         } else if (response.code() == 201) {
+                            // put user login in shared preferences
+                            Util.saveToSharedPreferences("userLogin", emailEt.getText().toString(), getApplicationContext());
+
                             Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(ConnectionActivity.this, HomeActivity.class);
                             startActivity(intent);

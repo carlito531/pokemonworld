@@ -1,6 +1,5 @@
-package com.imie.android.api;
+package com.imie.android.serviceWS;
 
-import com.imie.android.model.Pokemon;
 import com.imie.android.model.Trainer;
 
 import java.util.List;

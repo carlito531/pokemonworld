@@ -1,4 +1,4 @@
-package com.imie.android.api;
+package com.imie.android.serviceWS;
 
 import java.util.List;
 

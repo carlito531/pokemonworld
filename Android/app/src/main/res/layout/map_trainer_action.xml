@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ivOpponentAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/tvOpponentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/ivOpponentAvatar"
+        android:paddingTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        tools:text="Nom adversaire" />
+
+    <Button
+        android:id="@+id/btnOpponentEngage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Engager combat"
+        android:textAlignment="center"
+        android:gravity="bottom" />
+
+
+</RelativeLayout>

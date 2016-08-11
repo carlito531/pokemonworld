@@ -101,6 +101,7 @@ class ConnectionController extends FOSRestController
                 // set the no nullable columns
                 $trainer->setIsMaster(false);
                 $trainer->setPosition($this->setStartPosition());
+                $trainer->addPokemon($this->setFirstPokemon());
 
                 // save the new user in database
                 $em->persist($trainer);
@@ -123,6 +124,10 @@ class ConnectionController extends FOSRestController
     }
 
 
+    /**
+     * Set trainer starting position
+     * @return null
+     */
     private function setStartPosition() {
 
         $position = null;
@@ -140,4 +145,23 @@ class ConnectionController extends FOSRestController
         return $position;
     }
 
+
+    /**
+     * set first pokemon attributed to a trainer after his inscription
+     * @return null|object
+     */
+    private function setFirstPokemon()
+    {
+        $pokemon = null;
+
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $pokemon = $em->getRepository('AppBundle:Pokemon')->findOneBy(array('name' => 'Pikachu'));
+
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
+
+        return $pokemon;
+    }
 }

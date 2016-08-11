@@ -84,6 +84,7 @@ class Trainer
     private $opponent;
 
     /**
+     * @Expose
      * @ORM\OneToMany(targetEntity="Pokemon", mappedBy="trainer")
      */
     private $pokemons;

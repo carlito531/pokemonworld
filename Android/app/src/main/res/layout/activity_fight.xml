@@ -32,19 +32,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/Dresseurs"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ListView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lvTrainers" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/Resume"
+                    android:id="@+id/tabMap"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -57,16 +45,17 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Dresseurs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/Pokemons"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <ListView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lvPokemons"
-                        android:visibility="visible" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

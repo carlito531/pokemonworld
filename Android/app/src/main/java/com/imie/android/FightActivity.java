@@ -1,25 +1,28 @@
 package com.imie.android;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.imie.android.ViewHelper.PokemonListViewAdapter;
-import com.imie.android.ViewHelper.TrainerListViewAdapter;
-import com.imie.android.api.DataProvider;
-import com.imie.android.api.PokemonWS;
-import com.imie.android.api.TrainerWS;
-import com.imie.android.model.Pokemon;
-import com.imie.android.model.Position;
+import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
 
@@ -34,10 +37,10 @@ import retrofit.Retrofit;
 public class FightActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TabHost tabHost;
-    private ListView trainerList;
-    private ListView pokemonList;
     private Retrofit retrofit;
     private GoogleMap maps;
+    private LinearLayout dresseurLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,96 +49,70 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
 
         // Initialize Retrofit
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8888")
+                .baseUrl(Util.getApiUrlBase(getApplicationContext()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        // Get listViews
-        trainerList = (ListView) findViewById(R.id.lvTrainers);
-        pokemonList = (ListView) findViewById(R.id.lvPokemons);
 
         // Initialize google maps fragment
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
+        // initialize dresseur layout
+        dresseurLayout = (LinearLayout) findViewById(R.id.Dresseurs);
+
         // set navigation on tabs
-        tabHost = (TabHost)findViewById(R.id.tabHost);
+        tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
 
-        TabHost.TabSpec spec = tabHost.newTabSpec("Dresseurs");
+        TabHost.TabSpec spec = tabHost.newTabSpec("Map");
+        spec.setContent(R.id.tabMap);
+        spec.setIndicator("Map");
+        tabHost.addTab(spec);
+
+        spec = tabHost.newTabSpec("Dresseurs");
         spec.setContent(R.id.Dresseurs);
         spec.setIndicator("Dresseurs");
         tabHost.addTab(spec);
-
-        tabHost = (TabHost)findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        spec = tabHost.newTabSpec("Resumé");
-        spec.setContent(R.id.Resume);
-        spec.setIndicator("Resumé");
-        tabHost.addTab(spec);
-
-        tabHost = (TabHost)findViewById(R.id.tabHost);
-        tabHost.setup();
 
         spec = tabHost.newTabSpec("Pokemons");
         spec.setContent(R.id.Pokemons);
         spec.setIndicator("Pokemons");
         tabHost.addTab(spec);
-
-        // Get trainer list by calling the symfony api
-        TrainerWS trainerService = retrofit.create(TrainerWS.class);
-
-        Call<List<Trainer>> trainerItems = trainerService.getTrainerList();
-        trainerItems.enqueue(new Callback<List<Trainer>>() {
-            @Override
-            public void onResponse(Response<List<Trainer>> response, Retrofit retrofit) {
-                DataProvider.getInstance().setItems(response.body());
-
-                // fill the pokemon listView component with the response
-                try {
-                    TrainerListViewAdapter adapter = new TrainerListViewAdapter(FightActivity.this, response.body());
-                    trainerList.setAdapter(adapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(getApplication(),"Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        // Get pokemon list by calling the symfony api
-        PokemonWS pokemonService = retrofit.create(PokemonWS.class);
-
-        Call<List<Pokemon>> pokemonItems = pokemonService.getPokemonList();
-        pokemonItems.enqueue(new Callback<List<Pokemon>>() {
-            @Override
-            public void onResponse(Response<List<Pokemon>> response, Retrofit retrofit) {
-                DataProvider.getInstance().setItems(response.body());
-
-                // fill the pokemon listView component with the response
-                try {
-                    PokemonListViewAdapter adapter = new PokemonListViewAdapter(FightActivity.this, response.body());
-                    pokemonList.setAdapter(adapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(getApplication(),"Error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
-    //Get user position to place his marker on the Google maps
+
+    /**
+     * Actions when Google map is ready
+     * @param googleMap
+     */
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+        maps = googleMap;
+
+        maps.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                // if user clicked on his marker
+                String connectedUser = Util.getSharedPreferences("userLogin", getApplicationContext());
+                if (marker.getTitle().equals(connectedUser)) {
+                    Intent intent = new Intent(FightActivity.this, TrainerActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    updateDresseurLayout(marker);
+                    tabHost.setCurrentTab(1);
+                }
+            }
+        });
+
+        getUserPosition();
+        getUsersPosition();
+    }
+
+
+    /**
+     * Get user position to place his marker on the Google maps
+     */
     public void getUserPosition() {
 
         // Get user login which is stored in sharedPreferences
@@ -156,6 +133,7 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
                         LatLng trainerLatLng = new LatLng(trainer.getPosition().getLatitude(), trainer.getPosition().getLongitude());
                         maps.addMarker(new MarkerOptions().position(trainerLatLng).title(trainer.getLogin()));
                         maps.moveCamera(CameraUpdateFactory.newLatLng(trainerLatLng));
+                        maps.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
                     }
                 }
 
@@ -167,13 +145,76 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
+
     /**
-     *
-     * @param googleMap
+     * Get all trainers positions and add a marker for each ones on the google map
      */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        maps = googleMap;
-        getUserPosition();
+    public void getUsersPosition() {
+
+        TrainerWS service = retrofit.create(TrainerWS.class);
+        Call<List<Trainer>> item = service.getTrainerList();
+
+        item.enqueue(new Callback<List<Trainer>>() {
+            @Override
+            public void onResponse(Response<List<Trainer>> response, Retrofit retrofit) {
+                if (response.body() != null) {
+
+                    List<Trainer> trainers = response.body();
+
+                    String currentUser = Util.getSharedPreferences("userLogin", getApplicationContext());
+
+                    // for each trainers except the connected user, put a marker on the map
+                    for (Trainer trainer : trainers) {
+                        if (!trainer.getLogin().equals(currentUser)) {
+                            LatLng trainerLatLng = new LatLng(trainer.getPosition().getLatitude(), trainer.getPosition().getLongitude());
+                            maps.addMarker(new MarkerOptions()
+                                    .position(trainerLatLng)
+                                    .title("<dresseur> " + trainer.getLogin())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    /**
+     * on tabHost switched, construct the view
+     */
+    public void updateDresseurLayout(Marker marker) {
+
+        // clean layout
+        dresseurLayout.removeAllViews();
+
+        // if user clicked on an opponent marker
+        if (marker.getTitle().contains("<dresseur>")) {
+            LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+            View trainerActionView = layoutInflater.inflate(R.layout.map_trainer_action, null);
+            dresseurLayout.addView(trainerActionView);
+
+            ImageView ivOpponentAvatar = (ImageView) trainerActionView.findViewById(R.id.ivOpponentAvatar);
+            ivOpponentAvatar.setImageDrawable(new ColorDrawable(Color.BLACK));
+
+            TextView tvName = (TextView) trainerActionView.findViewById(R.id.tvOpponentName);
+            tvName.setText(marker.getTitle());
+
+            Button btnEngage = (Button)trainerActionView.findViewById(R.id.btnOpponentEngage);
+            btnEngage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Engager combat !", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        // if user clicked on a pokemon
+
+        // if user clicked on a npc
     }
 }

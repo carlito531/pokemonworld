@@ -54,6 +54,7 @@ class LoadPokemonData extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         $this->addReference('pokemon-raichu', $pokemon);
+        $this->addReference('pokemon-pikachu', $pokemon1);
     }
 
     /**

@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.imie.android.api.DataProvider;
-import com.imie.android.api.PokemonWS;
+import com.imie.android.serviceWS.DataProvider;
+import com.imie.android.serviceWS.PokemonWS;
 
 import com.imie.android.model.Pokemon;
+import com.imie.android.util.Util;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -62,7 +63,7 @@ public class PokedexActivity extends AppCompatActivity {
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8888")
+                .baseUrl(Util.getApiUrlBase(getApplicationContext()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

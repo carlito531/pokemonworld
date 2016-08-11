@@ -29,7 +29,7 @@ class Pokemon
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, name="name", nullable=false, unique=true)
+     * @ORM\Column(type="string", length=50, name="name", nullable=false)
      * @Expose
      */
     private $name;

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,4 +90,15 @@ public class Util {
         return preferences.getString(key, null);
     }
 
+    /**
+     * Return the api base url from the config.properties file
+     * @param context
+     * @return
+     */
+    public static String getApiUrlBase(Context context) {
+        AssetPropertyReader assetsPropertyReader = new AssetPropertyReader(context);
+        Properties p = assetsPropertyReader.getProperties("config.properties");
+
+        return p.getProperty("ApiUrl");
+    }
 }
