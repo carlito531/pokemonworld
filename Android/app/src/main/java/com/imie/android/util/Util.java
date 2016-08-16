@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by charly on 19/07/2016.
@@ -100,5 +100,18 @@ public class Util {
         Properties p = assetsPropertyReader.getProperties("config.properties");
 
         return p.getProperty("ApiUrl");
+    }
+
+
+    /**
+     * Get only opponent trainer name
+     * @param markerTitle
+     * @return
+     */
+    public static String parseMarkerTitle(String markerTitle) {
+        markerTitle = StringUtils.substringAfter(markerTitle, ">");
+        markerTitle = markerTitle.trim();
+
+        return markerTitle;
     }
 }

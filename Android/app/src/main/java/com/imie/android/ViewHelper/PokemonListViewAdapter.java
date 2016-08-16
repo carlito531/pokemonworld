@@ -40,10 +40,6 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
             viewHolder.level = (TextView) convertView.findViewById(R.id.tvPokemonListLevel);
             viewHolder.experience = (TextView) convertView.findViewById(R.id.tvPokemonListExperience);
             viewHolder.hp = (TextView) convertView.findViewById(R.id.tvPokemonListHp);
-            viewHolder.attack1 = (TextView) convertView.findViewById(R.id.tvPokemonListAttack1);
-            viewHolder.attack2 = (TextView) convertView.findViewById(R.id.tvPokemonListAttack2);
-            viewHolder.attack3 = (TextView) convertView.findViewById(R.id.tvPokemonListAttack3);
-            viewHolder.attack4 = (TextView) convertView.findViewById(R.id.tvPokemonListAttack4);
 
             convertView.setTag(viewHolder);
         }
@@ -54,10 +50,6 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         // fill the view
         viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
         viewHolder.name.setText("Nom: " + pokemon.getName());
-        viewHolder.attack1.setText("Attaque 1: " + pokemon.getAttack1().getName());
-        viewHolder.attack2.setText("Attaque 2: " + pokemon.getAttack2().getName());
-        viewHolder.attack3.setText("Attaque 3: " + pokemon.getAttack3().getName());
-        viewHolder.attack4.setText("Attaque 4 " + pokemon.getAttack4().getName());
         viewHolder.type.setText("Type: " + pokemon.getPokemonType().getName());
         viewHolder.level.setText("Niveau: " + pokemon.getLevel().toString());
         viewHolder.experience.setText("Experience: " + pokemon.getExperience().toString());
@@ -73,9 +65,5 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         public TextView level;
         public TextView experience;
         public TextView hp;
-        public TextView attack1;
-        public TextView attack2;
-        public TextView attack3;
-        public TextView attack4;
     }
 }

@@ -28,12 +28,40 @@
         tools:text="Nom dresseur" />
 
     <TextView
-        android:id="@+id/tvTraineBadges"
+        android:id="@+id/tvTrainerBadges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/black"
         android:layout_below="@+id/tvTrainerName"
         tools:text="Badges" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTrainerBadges"
+        android:text="Aller vers le nord"
+        android:id="@+id/btnTrainerMoveNorth" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aller vers le sud"
+        android:layout_below="@+id/btnTrainerMoveNorth"
+        android:id="@+id/btnTrainerMoveSouth" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aller vers l'est"
+        android:layout_below="@+id/btnTrainerMoveSouth"
+        android:id="@+id/btnTrainerMoveEast" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aller vers l'ouest"
+        android:layout_below="@+id/btnTrainerMoveEast"
+        android:id="@+id/btnTrainerMoveWest" />
 
 </RelativeLayout>

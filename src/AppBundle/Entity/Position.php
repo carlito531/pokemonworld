@@ -47,7 +47,7 @@ class Position
 
     /**
      * @ORM\ManyToOne(targetEntity="Zone", inversedBy="position")
-     * @ORM\JoinColumn(name="zone_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="zone_id", referencedColumnName="id")
      * @Expose
      */
     private $zones;

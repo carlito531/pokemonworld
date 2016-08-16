@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.util.Util;
+import com.microsoft.azure.engagement.EngagementAgent;
+import com.microsoft.azure.engagement.EngagementConfiguration;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -29,13 +31,22 @@ public class ConnectionActivity extends AppCompatActivity {
     EditText emailEt;
     EditText pwdEt;
     CheckBox isNew;
-
+    String deviceId;
     Button connectionBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Azure mobile engagement registring device id
+        EngagementConfiguration engagementConfiguration = new EngagementConfiguration();
+        engagementConfiguration.setConnectionString("Endpoint=pokemonworld.device.mobileengagement.windows.net;SdkKey=fb7e9ac50f622caf9d0043e99ebfc671;AppId=nep000170");
+        EngagementAgent.getInstance(this).init(engagementConfiguration);
+
+        if (Util.getSharedPreferences("deviceId", getApplicationContext()) == null) {
+            getDeviceId();
+        }
 
         emailEt = (EditText)findViewById(R.id.etxtLogin);
         pwdEt = (EditText)findViewById(R.id.etxtPassword);
@@ -75,6 +86,21 @@ public class ConnectionActivity extends AppCompatActivity {
 
 
     /**
+     * Get device id to add to notification campaign
+     */
+    private void getDeviceId() {
+        EngagementAgent.getInstance(this).getDeviceId(new EngagementAgent.Callback<String>()
+        {
+            @Override
+            public void onResult(String dId)
+            {
+                Util.saveToSharedPreferences("deviceId", dId, getApplicationContext());
+            }
+        });
+    }
+
+
+    /**
      *
      *
      * @param view
@@ -85,6 +111,7 @@ public class ConnectionActivity extends AppCompatActivity {
         String pseudo = pseudoEt.getText().toString();
         String email = emailEt.getText().toString();
         String password = pwdEt.getText().toString();
+        String deviceId = Util.getSharedPreferences("deviceId", getApplicationContext());
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
@@ -97,10 +124,10 @@ public class ConnectionActivity extends AppCompatActivity {
             // When Email entered is Valid
             if (Util.validate(email)) {
 
-                // Get pokemon searched by calling the symfony api
+                // Get connection
                 TrainerWS service = retrofit.create(TrainerWS.class);
 
-                Call<String> item = service.getConnection(email, Util.toSha256(password), pseudo);
+                Call<String> item = service.getConnection(email, Util.toSha256(password), pseudo, deviceId);
                 item.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Response<String> response, Retrofit retrofit) {
@@ -121,7 +148,7 @@ public class ConnectionActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Mauvais identifiants", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), response.body(), Toast.LENGTH_LONG).show();
                         }
                     }
 

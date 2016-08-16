@@ -106,14 +106,8 @@ class Pokemon
     private $attack4;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Pokedex", inversedBy="pokedexs")
-     * @ORM\JoinColumn(name="pokedex_id", referencedColumnName="id", nullable=false)
-     */
-    private $pokedex;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Position", inversedBy="pokemons")
-     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="position_id", referencedColumnName="id")
      */
     private $position;
 
@@ -415,29 +409,6 @@ class Pokemon
         return $this->attack4;
     }
 
-    /**
-     * Set pokedex
-     *
-     * @param \AppBundle\Entity\Pokedex $pokedex
-     *
-     * @return Pokemon
-     */
-    public function setPokedex(\AppBundle\Entity\Pokedex $pokedex)
-    {
-        $this->pokedex = $pokedex;
-
-        return $this;
-    }
-
-    /**
-     * Get pokedex
-     *
-     * @return \AppBundle\Entity\Pokedex
-     */
-    public function getPokedex()
-    {
-        return $this->pokedex;
-    }
 
     /**
      * Set position

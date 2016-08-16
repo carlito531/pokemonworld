@@ -6,9 +6,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.imie.android.ViewHelper.PokemonListViewAdapter;
+import com.imie.android.model.Trainer;
 import com.imie.android.serviceWS.DataProvider;
 import com.imie.android.serviceWS.PokemonWS;
 import com.imie.android.model.Pokemon;
+import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.util.Util;
 
 import java.util.List;
@@ -36,18 +38,28 @@ public class PokemonActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        // Get pokemon list by calling the symfony api
-        PokemonWS pokemonService = retrofit.create(PokemonWS.class);
 
-        Call<List<Pokemon>> pokemonItems = pokemonService.getPokemonList();
-        pokemonItems.enqueue(new Callback<List<Pokemon>>() {
+        // Get connected user login
+        String login = Util.getSharedPreferences("userLogin", getApplicationContext());
+
+        // Get pokemon list by calling the symfony api
+        TrainerWS trainerService = retrofit.create(TrainerWS.class);
+
+        Call<Trainer> pokemonItems = trainerService.getTrainer(login);
+        pokemonItems.enqueue(new Callback<Trainer>() {
             @Override
-            public void onResponse(Response<List<Pokemon>> response, Retrofit retrofit) {
-                DataProvider.getInstance().setItems(response.body());
+            public void onResponse(Response<Trainer> response, Retrofit retrofit) {
+                DataProvider.getInstance().setItem(response.body());
+
+                Trainer trainer = null;
+
+                if(response.body() != null) {
+                    trainer = response.body();
+                }
 
                 // fill the pokemon listView component with the response
                 try {
-                    PokemonListViewAdapter adapter = new PokemonListViewAdapter(PokemonActivity.this, response.body());
+                    PokemonListViewAdapter adapter = new PokemonListViewAdapter(PokemonActivity.this, trainer.getPokemon());
                     pokemonList.setAdapter(adapter);
                 } catch (Exception e) {
                     e.printStackTrace();

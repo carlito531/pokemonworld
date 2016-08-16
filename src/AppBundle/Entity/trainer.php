@@ -46,6 +46,12 @@ class Trainer
     private $password;
 
     /**
+     * @ORM\Column(type="string", name="deviceId")
+     * @Expose
+     */
+    private $deviceId;
+
+    /**
      * @ORM\Column(type="boolean", name="isMaster")
      * @Expose
      */
@@ -90,11 +96,12 @@ class Trainer
     private $pokemons;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Position", inversedBy="trainers")
+     * @ORM\ManyToOne(targetEntity="Position", inversedBy="trainers", cascade={"persist"})
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
      * @Expose
      */
     private $position;
+
     /**
      * Constructor
      */
@@ -453,5 +460,29 @@ class Trainer
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set deviceId
+     *
+     * @param string $deviceId
+     *
+     * @return Trainer
+     */
+    public function setDeviceId($deviceId)
+    {
+        $this->deviceId = $deviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceId
+     *
+     * @return string
+     */
+    public function getDeviceId()
+    {
+        return $this->deviceId;
     }
 }

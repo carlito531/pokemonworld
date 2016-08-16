@@ -12,6 +12,8 @@ public class Trainer {
     private boolean is_master;
     private List<Badge> badges;
     private Position position;
+    private List<Pokemon> pokemons;
+    private String device_id;
 
     public Position getPosition() {
         return position;
@@ -51,5 +53,21 @@ public class Trainer {
 
     public void setBadges(List<Badge> badges) {
         this.badges = badges;
+    }
+
+    public List<Pokemon> getPokemon() {
+        return pokemons;
+    }
+
+    public void setPokemon(List<Pokemon> pokemon) {
+        this.pokemons = pokemon;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 }

@@ -26,6 +26,7 @@ class LoadTrainerData extends AbstractFixture implements OrderedFixtureInterface
         $trainer = new Trainer();
         $trainer->setName("Sasha531");
         $trainer->setLogin("sacha531@gmail.com");
+        $trainer->setDeviceId("deviceid");
         $trainer->setPassword(hash('sha256', 'sacha531'));
         $trainer->setIsMaster(false);
         $trainer->setPosition($this->getReference('position-ville'));
@@ -34,6 +35,7 @@ class LoadTrainerData extends AbstractFixture implements OrderedFixtureInterface
         $trainer1 = new Trainer();
         $trainer1->setName("Luc54");
         $trainer1->setLogin("luc54@gmail.com");
+        $trainer1->setDeviceId("deviceid");
         $trainer1->setPassword(hash('sha256', 'luc54'));
         $trainer1->setIsMaster(false);
         $trainer1->setPosition($this->getReference('position-ville'));

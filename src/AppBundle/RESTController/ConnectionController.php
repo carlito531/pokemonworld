@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use AppBundle\Entity\Trainer;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Zone;
+use Proxies\__CG__\AppBundle\Entity\Pokemon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +36,7 @@ class ConnectionController extends FOSRestController
         $pseudo = '';
         $login = '';
         $password = '';
+        $deviceId = null;
         $view = null;
         $trainer = null;
         $em = $this->getDoctrine()->getManager();
@@ -53,7 +55,12 @@ class ConnectionController extends FOSRestController
             // if it is an inscription request, go to inscription function
             if($request->request->get("pseudo") != null) {
                 $pseudo = $request->request->get("pseudo");
-                $view = $this->getInscription($pseudo, $login, $password);
+
+                if($request->request->get("deviceId") != null) {
+                    $deviceId = $request->request->get("deviceId");
+                }
+
+                $view = $this->getInscription($pseudo, $login, $password, $deviceId);
 
             } else {
                 // else, check if user login exist in database
@@ -85,7 +92,7 @@ class ConnectionController extends FOSRestController
      * @param $password
      * @return mixed
      */
-    private function getInscription($pseudo, $login, $password) {
+    private function getInscription($pseudo, $login, $password, $deviceId) {
 
         $trainer = new Trainer();
         $em = $this->getDoctrine()->getManager();
@@ -98,14 +105,20 @@ class ConnectionController extends FOSRestController
                 $trainer->setLogin($login);
                 $trainer->setPassword($password);
 
+                if ($deviceId != null) {
+                    $trainer->setDeviceId($deviceId);
+                }
+
                 // set the no nullable columns
                 $trainer->setIsMaster(false);
                 $trainer->setPosition($this->setStartPosition());
-                $trainer->addPokemon($this->setFirstPokemon());
 
                 // save the new user in database
                 $em->persist($trainer);
                 $em->flush();
+
+                // add a first pokemon (pikachu) to the new trainer
+                $this->setFirstPokemon($trainer);
 
                 // put the new user in session
                 session_start();
@@ -150,18 +163,39 @@ class ConnectionController extends FOSRestController
      * set first pokemon attributed to a trainer after his inscription
      * @return null|object
      */
-    private function setFirstPokemon()
+    private function setFirstPokemon(Trainer $trainer)
     {
         $pokemon = null;
+        $em = $this->getDoctrine()->getManager();
 
         try {
-            $em = $this->getDoctrine()->getManager();
-            $pokemon = $em->getRepository('AppBundle:Pokemon')->findOneBy(array('name' => 'Pikachu'));
+
+            $pokemon = new Pokemon();
+            $pokemon->setName('Pikachu');
+            $pokemon->setExperience(80);
+            $pokemon->setHp(100);
+            $pokemon->setLevel(1);
+            $pokemon->setTrainer($trainer);
+
+            $pokemonType = $em->getRepository('AppBundle:PokemonType')->findOneBy(array('name' => 'Electrique'));
+            $attack1 = $em->getRepository('AppBundle:Attack')->findOneBy(array('name' => 'Eclair'));
+            $attack2 = $em->getRepository('AppBundle:Attack')->findOneBy(array('name' => 'Tonnerre'));
+            $attack3 = $em->getRepository('AppBundle:Attack')->findOneBy(array('name' => 'Vive-attaque'));
+            $attack4 = $em->getRepository('AppBundle:Attack')->findOneBy(array('name' => 'Mimi-queue'));
+
+            $pokemon->setPokemonType($pokemonType);
+            $pokemon->setAttack1($attack1);
+            $pokemon->setAttack2($attack2);
+            $pokemon->setAttack3($attack3);
+            $pokemon->setAttack4($attack4);
+
+            // save the new user in database
+            $em->persist($pokemon);
+            $em->flush();
 
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }
-
-        return $pokemon;
     }
+
 }

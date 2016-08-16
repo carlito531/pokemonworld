@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.imie.android.common.FightConstant;
+import com.imie.android.serviceWS.FightWSImpl;
 import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
@@ -187,7 +189,7 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
     /**
      * on tabHost switched, construct the view
      */
-    public void updateDresseurLayout(Marker marker) {
+    public void updateDresseurLayout(final Marker marker) {
 
         // clean layout
         dresseurLayout.removeAllViews();
@@ -208,7 +210,9 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
             btnEngage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Engager combat !", Toast.LENGTH_LONG).show();
+
+                    String opponentName = Util.parseMarkerTitle(marker.getTitle());
+                    FightWSImpl fightWSimpl = new FightWSImpl(opponentName, getApplicationContext(), FightConstant.SENDING_REQUEST);
                 }
             });
         }

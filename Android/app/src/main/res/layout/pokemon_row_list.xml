@@ -60,40 +60,4 @@
         android:layout_below="@+id/tvPokemonListExperience"
         tools:text="HP" />
 
-    <TextView
-        android:id="@+id/tvPokemonListAttack1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/tvPokemonListName"
-        tools:text="Attaque 1" />
-
-    <TextView
-        android:id="@+id/tvPokemonListAttack2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/tvPokemonListAttack1"
-        android:layout_below="@+id/tvPokemonListAttack1"
-        tools:text="Attaque 2" />
-
-    <TextView
-        android:id="@+id/tvPokemonListAttack3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/tvPokemonListAttack2"
-        android:layout_below="@+id/tvPokemonListAttack2"
-        tools:text="Attaque 3" />
-
-    <TextView
-        android:id="@+id/tvPokemonListAttack4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/tvPokemonListAttack3"
-        android:layout_below="@+id/tvPokemonListAttack3"
-        tools:text="Attaque 4" />
-
 </RelativeLayout>

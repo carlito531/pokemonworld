@@ -33,6 +33,11 @@ class Fight
     private $date;
 
     /**
+     * @ORM\OneToOne(targetEntity="FightState")
+     */
+    private $fightState;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Trainer", inversedBy="player")
      * @ORM\JoinColumn(name="trainer_id1", referencedColumnName="id", nullable=false)
      * @Expose

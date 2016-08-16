@@ -37,3 +37,10 @@ connection:
     resource: 'AppBundle\RESTController\ConnectionController'
     defaults: {_format: json}
     prefix:   /api/connection
+
+fight:
+    type: annotation
+    resource: 'AppBundle\RESTController\FightController'
+    defaults: {_format: json}
+    prefix:   /api/fight
+
