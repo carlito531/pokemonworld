@@ -1,85 +1,61 @@
 package com.imie.android.serviceWS;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.imie.android.model.Trainer;
+import com.imie.android.model.Fight;
 import com.imie.android.util.Util;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.http.Field;
+import retrofit.http.Path;
 
 /**
- * Created by charly on 15/08/2016.
+ * Created by charly on 21/08/2016.
  */
-public class FightWSImpl {
+public class FightWSimpl {
 
-    private String opponentName;
-    private String opponentDeviceId;
-    private String fightState;
-    private Retrofit retrofit;
     private Context context;
+    private Retrofit retrofit;
 
-    public FightWSImpl(String opponent, Context context, String fightState) {
-        this.opponentName = opponent;
+    public FightWSimpl(Context context) {
         this.context = context;
-        this.fightState = fightState;
 
         // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(Util.getApiUrlBase(context))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        // Get opponentDeviceId
-        getOpponentDeviceId();
-
-        // Send notification to opponent
-        sendFightEngagementNotification();
-    }
-
-    /**
-     * Get opponentDeviceId
-     */
-    private void getOpponentDeviceId() {
-
-        TrainerWS service = retrofit.create(TrainerWS.class);
-
-        Call<Trainer> item = service.getTrainer(opponentName);
-        item.enqueue(new Callback<Trainer>() {
-            @Override
-            public void onResponse(Response<Trainer> response, Retrofit retrofit) {
-                if (response.body() != null) {
-                    opponentDeviceId = response.body().getDevice_id();
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-            }
-        });
     }
 
 
     /**
-     * Send fight engagement notification
+     * Initialize a new fight in database
+     *
+     * @param fightState
+     * @param opponentName
      */
-    private void sendFightEngagementNotification() {
+    public void setNewFight(String fightState, String opponentName) {
 
-        FightWS service = retrofit.create(FightWS.class);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime()).toString();
+        String trainer1 = Util.getSharedPreferences("userLogin", context);
 
-        Call<String> item = service.sendFightEngagementNotif(opponentDeviceId);
-        item.enqueue(new Callback<String>() {
+        FightWS fightWS = retrofit.create(FightWS.class);
+        Call<String> fightItem = fightWS.setNewFight(date, fightState, trainer1, opponentName);
+        fightItem.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                if (response.body() != null) {
-                    Toast.makeText(context, "Engager combat !", Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(context, response.body(), Toast.LENGTH_LONG);
             }
 
             @Override
@@ -87,6 +63,9 @@ public class FightWSImpl {
                 t.printStackTrace();
             }
         });
+
+
     }
+
 
 }

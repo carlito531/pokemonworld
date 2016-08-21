@@ -6,7 +6,7 @@ package com.imie.android.common;
  */
 public class FightConstant {
 
-    public final static String SENDING_REQUEST = "sending fight request";
-
+    public final static String FIGHT_REQUEST_SENT = "FIGHT_REQUEST_SENT";
+    public final static String FIGHT_REQUEST_ACCEPTED = "FIGHT_REQUEST_ACCEPTED";
 
 }

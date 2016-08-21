@@ -34,6 +34,7 @@ class Fight
 
     /**
      * @ORM\OneToOne(targetEntity="FightState")
+     * @Expose
      */
     private $fightState;
 
@@ -162,5 +163,29 @@ class Fight
     public function getArena()
     {
         return $this->arena;
+    }
+
+    /**
+     * Set fightState
+     *
+     * @param \AppBundle\Entity\FightState $fightState
+     *
+     * @return Fight
+     */
+    public function setFightState(\AppBundle\Entity\FightState $fightState = null)
+    {
+        $this->fightState = $fightState;
+
+        return $this;
+    }
+
+    /**
+     * Get fightState
+     *
+     * @return \AppBundle\Entity\FightState
+     */
+    public function getFightState()
+    {
+        return $this->fightState;
     }
 }

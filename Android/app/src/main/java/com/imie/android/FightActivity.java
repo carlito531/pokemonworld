@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,8 +21,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.imie.android.common.FightConstant;
-import com.imie.android.serviceWS.FightWSImpl;
+import com.imie.android.model.Fight;
+import com.imie.android.serviceWS.FightWS;
 import com.imie.android.serviceWS.TrainerWS;
 import com.imie.android.model.Trainer;
 import com.imie.android.util.Util;
@@ -42,6 +41,7 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
     private Retrofit retrofit;
     private GoogleMap maps;
     private LinearLayout dresseurLayout;
+    private String currentTrainer;
 
 
     @Override
@@ -49,15 +49,33 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
+        // Set current trainer
+        currentTrainer = Util.getSharedPreferences("userLogin", getApplicationContext());
+
         // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(Util.getApiUrlBase(getApplicationContext()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
+        /* Initialize fightTrainer fragment
+        if (findViewById(R.id.Dresseurs) != null) {
+
+           // Check if fragement is already instanciated
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            FightTrainerFragment fightTrainerFragment = new FightTrainerFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.Dresseurs, fightTrainerFragment).commit();
+        }
+        */
+
         // Initialize google maps fragment
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
+
 
         // initialize dresseur layout
         dresseurLayout = (LinearLayout) findViewById(R.id.Dresseurs);
@@ -74,11 +92,6 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
         spec = tabHost.newTabSpec("Dresseurs");
         spec.setContent(R.id.Dresseurs);
         spec.setIndicator("Dresseurs");
-        tabHost.addTab(spec);
-
-        spec = tabHost.newTabSpec("Pokemons");
-        spec.setContent(R.id.Pokemons);
-        spec.setIndicator("Pokemons");
         tabHost.addTab(spec);
     }
 
@@ -101,8 +114,7 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
                     startActivity(intent);
 
                 } else {
-                    updateDresseurLayout(marker);
-                    tabHost.setCurrentTab(1);
+                    getFightTrainerFragment(marker);
                 }
             }
         });
@@ -189,36 +201,23 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
     /**
      * on tabHost switched, construct the view
      */
-    public void updateDresseurLayout(final Marker marker) {
-
-        // clean layout
-        dresseurLayout.removeAllViews();
+    public void getFightTrainerFragment(final Marker marker) {
 
         // if user clicked on an opponent marker
         if (marker.getTitle().contains("<dresseur>")) {
-            LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-            View trainerActionView = layoutInflater.inflate(R.layout.map_trainer_action, null);
-            dresseurLayout.addView(trainerActionView);
 
-            ImageView ivOpponentAvatar = (ImageView) trainerActionView.findViewById(R.id.ivOpponentAvatar);
-            ivOpponentAvatar.setImageDrawable(new ColorDrawable(Color.BLACK));
+            // Initialize fightTrainer fragment
+            if (findViewById(R.id.Dresseurs) != null) {
+                Bundle args = new Bundle();
+                args.putString("opponentName", Util.parseMarkerTitle(marker.getTitle()));
 
-            TextView tvName = (TextView) trainerActionView.findViewById(R.id.tvOpponentName);
-            tvName.setText(marker.getTitle());
+                FightTrainerFragment fightTrainerFragment = new FightTrainerFragment();
+                fightTrainerFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().add(R.id.Dresseurs, fightTrainerFragment).commit();
+            }
 
-            Button btnEngage = (Button)trainerActionView.findViewById(R.id.btnOpponentEngage);
-            btnEngage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String opponentName = Util.parseMarkerTitle(marker.getTitle());
-                    FightWSImpl fightWSimpl = new FightWSImpl(opponentName, getApplicationContext(), FightConstant.SENDING_REQUEST);
-                }
-            });
+            // Switch to tab 'dresseur'
+            tabHost.setCurrentTab(1);
         }
-
-        // if user clicked on a pokemon
-
-        // if user clicked on a npc
     }
 }

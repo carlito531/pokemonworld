@@ -38,6 +38,13 @@ connection:
     defaults: {_format: json}
     prefix:   /api/connection
 
+engagement:
+    type: annotation
+    resource: 'AppBundle\RESTController\MobileEngagementController'
+    defaults: {_format: json}
+    prefix:   /api/engagement
+
+
 fight:
     type: annotation
     resource: 'AppBundle\RESTController\FightController'
