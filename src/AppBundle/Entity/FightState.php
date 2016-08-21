@@ -32,7 +32,6 @@ class FightState
      */
     private $name;
 
-
     /**
      * Get id
      *

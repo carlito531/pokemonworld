@@ -87,6 +87,8 @@ public class FightTrainerFragment extends Fragment {
                 if (response.body() != null) {
                     Fight fight = response.body();
                     constructView(fight);
+                } else {
+                    constructView(null);
                 }
             }
             @Override
