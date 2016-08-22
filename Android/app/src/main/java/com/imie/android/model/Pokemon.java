@@ -6,15 +6,25 @@ package com.imie.android.model;
  */
 public class Pokemon {
 
+    Integer id;
     String name;
     Attack attack1;
     Attack attack2;
     Attack attack3;
     Attack attack4;
     PokemonType pokemon_type;
+    PokemonFightState pokemonFightState;
     Integer level;
     Integer experience;
     Integer hp;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getHp() {
         return hp;
@@ -86,5 +96,13 @@ public class Pokemon {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+    }
+
+    public PokemonFightState getPokemonFightState() {
+        return pokemonFightState;
+    }
+
+    public void setPokemonFightState(PokemonFightState pokemonFightState) {
+        this.pokemonFightState = pokemonFightState;
     }
 }

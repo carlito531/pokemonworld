@@ -2,6 +2,7 @@ package com.imie.android;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -140,17 +141,25 @@ public class FightTrainerFragment extends Fragment {
                     l.addView(answerFightRequest);
                 }
 
-            //
+            // If fight request is accepted, let the user choose 4 pokemons
             } else if (fight.getFight_state().getName().equals(FightConstant.FIGHT_REQUEST_ACCEPTED)) {
                 TextView tvFightAccepted = new TextView(getActivity());
-                tvFightAccepted.setText("La requête de combat a été accepté");
+                tvFightAccepted.setText("La requête de combat a été accepté, choisissez 4 pokemons pour combattre");
+
+                Button startPokemonChoice = new Button(getActivity());
+                startPokemonChoice.setText("Choisir pokemons");
+                startPokemonChoice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Go to PokemonActivity to choose pokemons
+                        Intent pokemonActivity = new Intent(getActivity(), PokemonActivity.class);
+                        pokemonActivity.putExtra("pokemonChoice","pokemonChoice");
+                        startActivity(pokemonActivity);
+                    }
+                });
+
                 l.addView(tvFightAccepted);
-
-                //FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
-                //fightWSimpl.updateFightState(fight.getId(), FightConstant.FIGHT_REQUEST_ACCEPTED);
-
-                //MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_ACCEPTED);
-                //mobileEngagementWSimpl.sendNotification(opponentName);
+                l.addView(startPokemonChoice);
             }
 
 

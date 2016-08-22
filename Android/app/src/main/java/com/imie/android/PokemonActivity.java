@@ -1,7 +1,10 @@
 package com.imie.android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +34,18 @@ public class PokemonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pokemon);
 
         pokemonList = (ListView) findViewById(R.id.lvPokemons);
+
+        // If the access from fightActivity
+        Intent myIntent = getIntent();
+        if (myIntent.getStringExtra("pokemonChoice") != null) {
+            pokemonList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                   Pokemon pokemon = (Pokemon)pokemonList.getItemAtPosition(position);
+                    Toast.makeText(getApplicationContext(), pokemon.getName(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()

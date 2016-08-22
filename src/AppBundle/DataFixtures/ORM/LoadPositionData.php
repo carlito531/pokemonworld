@@ -35,11 +35,26 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $startPosition->setLongitude('-3.5397994');
         $startPosition->setZones($this->getReference('depart'));
 
+        $randomPosition = new Position();
+        $randomPosition->setLatitude('48.7450968');
+        $randomPosition->setLongitude('-3.5397994');
+        $randomPosition->setZones($this->getReference('zone-ville'));
+
+        $randomPosition1 = new Position();
+        $randomPosition1->setLatitude('48.7453968');
+        $randomPosition1->setLongitude('-3.5327994');
+        $randomPosition1->setZones($this->getReference('zone-ville'));
+
         $manager->persist($position);
         $manager->persist($startPosition);
+        $manager->persist($randomPosition);
+        $manager->persist($randomPosition1);
         $manager->flush();
 
         $this->addReference('position-ville', $position);
+        $this->addReference('position-depart', $startPosition);
+        $this->addReference('position-aleatoire', $randomPosition);
+        $this->addReference('position-aleatoire1', $randomPosition1);
     }
 
     /**

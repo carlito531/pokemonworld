@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: charly
- * Date: 01/07/2016
- * Time: 21:54
+ * Date: 16/08/2016
+ * Time: 19:55
  */
 
 namespace AppBundle\DataFixtures\ORM;
@@ -11,9 +11,9 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Fight;
+use AppBundle\Entity\PokemonFightState;
 
-class LoadFightData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPokemonFightState extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -23,12 +23,19 @@ class LoadFightData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $fight = new Fight();
-        $fight->setDate(date('Y-m-d H:i:s'));
-        $fight->setTrainer1($this->getReference('trainer'));
-        $fight->setTrainer2($this->getReference('trainer1'));
+        $inFightList = new PokemonFightState();
+        $inFightList->setName("IN_FIGHT_LIST");
 
-        $manager->persist($fight);
+        $fighting = new PokemonFightState();
+        $fighting->setName("IN_FIGHT");
+
+        $isKo = new PokemonFightState();
+        $isKo->setName("KO");
+
+        $manager->persist($inFightList);
+        $manager->persist($fighting);
+        $manager->persist($isKo);
+
         $manager->flush();
     }
 
@@ -39,6 +46,6 @@ class LoadFightData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 3;
+       return 0;
     }
 }

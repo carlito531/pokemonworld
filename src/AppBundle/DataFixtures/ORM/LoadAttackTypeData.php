@@ -23,18 +23,29 @@ class LoadAttackTypeData extends AbstractFixture implements OrderedFixtureInterf
      */
     public function load(ObjectManager $manager)
     {
-        $attackType = new AttackType();
-        $attackType->setType('Electrique');
+        $electrique = new AttackType();
+        $electrique->setType('Electrique');
 
-        $attackType1 = new AttackType();
-        $attackType1->setType('Normal');
+        $normal = new AttackType();
+        $normal->setType('Normal');
 
-        $manager->persist($attackType);
-        $manager->persist($attackType1);
+        $psi = new AttackType();
+        $psi->setType('Psi');
+
+        $roche = new AttackType();
+        $roche->setType('Roche');
+
+        $manager->persist($electrique);
+        $manager->persist($normal);
+        $manager->persist($psi);
+        $manager->persist($roche);
+
         $manager->flush();
 
-        $this->addReference('attaquetype-electrique', $attackType);
-        $this->addReference('attaquetype-normal', $attackType1);
+        $this->addReference('attaquetype-electrique', $electrique);
+        $this->addReference('attaquetype-normal', $normal);
+        $this->addReference('attaquetype-psi', $psi);
+        $this->addReference('attaquetype-roche', $roche);
     }
 
     /**
