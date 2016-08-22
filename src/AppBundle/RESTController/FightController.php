@@ -31,8 +31,6 @@ class FightController extends FOSRestController
      */
     public function setNewFight(Request $request) {
         $view = null;
-
-        $fight = new Fight();
         $em = $this->getDoctrine()->getManager();
 
         $date = null;
@@ -59,6 +57,7 @@ class FightController extends FOSRestController
 
         if ($date != null && $fightState != null && $trainer1 != null && $trainer2 != null) {
             try {
+                $fight = new Fight();
                 $fight->setDate($date);
                 $fight->setFightState($em->getRepository('AppBundle:FightState')->findOneBy(array('name' => $fightState)));
                 $fight->setTrainer1($em->getRepository('AppBundle:Trainer')->findOneBy(array('login' => $trainer1)));
@@ -66,6 +65,7 @@ class FightController extends FOSRestController
 
                 $em->persist($fight);
                 $em->flush();
+                $fight->getId();
 
                 $view = $this->view("Nouveau combat enregistré !", 200)->setFormat('json');
 
@@ -85,8 +85,7 @@ class FightController extends FOSRestController
      * @Method("GET")
      * @return View
      */
-    public function getFight($trainer)
-    {
+    public function getFight($trainer) {
         $view = null;
         $em = $this->getDoctrine()->getManager();
 
@@ -109,6 +108,51 @@ class FightController extends FOSRestController
             }
         } catch (Exception $e) {
             var_dump($e->getMessage());
+        }
+
+        return $view;
+    }
+
+
+    /**
+     * @Route("/{id}/update")
+     * @Method("PUT")
+     *
+     * @param $id
+     * @param Request $request
+     * @return View
+     */
+    public function updateFightState($id, Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $fightState = null;
+        $view = null;
+
+        try {
+            $fight = $em->getRepository('AppBundle:Fight')->findOneBy(array('id' => $id));
+
+            if ($fight != null) {
+                if ($request != null) {
+
+                    if($request->request->get("fightState") != null) {
+                        $fightState = $request->request->get("fightState");
+                    }
+
+                    $newfightState = $em->getRepository('AppBundle:FightState')->findOneBy(array('name' => $fightState));
+
+                    if ($newfightState != null) {
+                        $fight->setFightState($newfightState);
+                    }
+
+                    $em->persist($fight);
+                    $em->flush();
+
+                    $view = $this->view("Combat mis à jour", 200)->setFormat('json');
+                }
+            }
+
+        } catch (Exception $e) {
+            $view = $this->view($e->getMessage())->setFormat('json');
         }
 
         return $view;

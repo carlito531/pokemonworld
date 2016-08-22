@@ -7,11 +7,19 @@ import java.util.Date;
  */
 public class Fight {
 
+    private Integer id;
     private String date;
     private FightState fight_state;
     private Trainer trainer1;
     private Trainer trainer2;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDate() {
         return date;

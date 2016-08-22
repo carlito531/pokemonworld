@@ -23,6 +23,7 @@ class Fight
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -33,7 +34,8 @@ class Fight
     private $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="FightState")
+     * @ORM\ManyToOne(targetEntity="FightState")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      * @Expose
      */
     private $fightState;
@@ -68,6 +70,16 @@ class Fight
     {
         return $this->id;
     }
+
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
 
     /**
      * Set date

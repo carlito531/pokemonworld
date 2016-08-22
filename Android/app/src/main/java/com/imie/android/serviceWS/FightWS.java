@@ -10,6 +10,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 
 /**
@@ -24,4 +25,7 @@ public interface FightWS {
     @GET("/api/fight/{trainer}")
     Call<Fight> getFight(@Path("trainer") String trainer);
 
+    @FormUrlEncoded
+    @PUT("/api/fight/{id}/update")
+    Call<String> updateFightState(@Path("id") Integer id, @Field("fightState") String fightState);
 }

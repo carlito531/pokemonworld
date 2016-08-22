@@ -63,9 +63,30 @@ public class FightWSimpl {
                 t.printStackTrace();
             }
         });
-
-
     }
 
 
+    /**
+     * Update fightState
+     *
+     * @param fightId
+     * @param fightState
+     */
+    public void updateFightState(Integer fightId, String fightState) {
+
+        FightWS fightWS = retrofit.create(FightWS.class);
+        Call<String> fightItem = fightWS.updateFightState(fightId, fightState);
+        fightItem.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response, Retrofit retrofit) {
+                Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
 }

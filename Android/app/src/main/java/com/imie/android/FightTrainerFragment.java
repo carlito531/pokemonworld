@@ -106,7 +106,7 @@ public class FightTrainerFragment extends Fragment {
     /**
      * Construct the view depend on fight state
      */
-    private void constructView(Fight fight) {
+    private void constructView(final Fight fight) {
 
         LinearLayout l = (LinearLayout) root.findViewById(R.id.fightContentLayout);
 
@@ -127,6 +127,10 @@ public class FightTrainerFragment extends Fragment {
                     answerFightRequest.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
+                            final Integer fightId = fight.getId();
+                            fightWSimpl.updateFightState(fightId, FightConstant.FIGHT_REQUEST_ACCEPTED);
+
                             MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_ACCEPTED);
                             mobileEngagementWSimpl.sendNotification(opponentName);
                         }
@@ -136,11 +140,17 @@ public class FightTrainerFragment extends Fragment {
                     l.addView(answerFightRequest);
                 }
 
-
+            //
             } else if (fight.getFight_state().getName().equals(FightConstant.FIGHT_REQUEST_ACCEPTED)) {
                 TextView tvFightAccepted = new TextView(getActivity());
                 tvFightAccepted.setText("La requête de combat a été accepté");
                 l.addView(tvFightAccepted);
+
+                //FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
+                //fightWSimpl.updateFightState(fight.getId(), FightConstant.FIGHT_REQUEST_ACCEPTED);
+
+                //MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_ACCEPTED);
+                //mobileEngagementWSimpl.sendNotification(opponentName);
             }
 
 
@@ -155,11 +165,11 @@ public class FightTrainerFragment extends Fragment {
                 engageFight.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_SENT);
-                        mobileEngagementWSimpl.sendNotification(opponentName);
-
                         FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
                         fightWSimpl.setNewFight(FightConstant.FIGHT_REQUEST_SENT, opponentName);
+
+                        MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_SENT);
+                        mobileEngagementWSimpl.sendNotification(opponentName);
                     }
                 });
 
