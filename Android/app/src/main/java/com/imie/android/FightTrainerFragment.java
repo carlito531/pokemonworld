@@ -11,21 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Line;
+import com.imie.android.ViewHelper.PokemonListViewAdapter;
 import com.imie.android.common.FightConstant;
 import com.imie.android.model.Fight;
 import com.imie.android.model.FightState;
+import com.imie.android.model.Pokemon;
 import com.imie.android.serviceWS.FightWS;
 import com.imie.android.serviceWS.FightWSimpl;
 import com.imie.android.serviceWS.MobileEngagementWSimpl;
+import com.imie.android.serviceWS.PokemonWSimpl;
 import com.imie.android.util.Util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -44,6 +50,8 @@ public class FightTrainerFragment extends Fragment {
     private String currentTrainer;
     private String opponentName;
     private View root;
+    private List<Pokemon> trainer1PokemonsInFight;
+    private List<Pokemon> trainer2PokemonsInFight;
 
     public FightTrainerFragment() {
     }
@@ -105,7 +113,7 @@ public class FightTrainerFragment extends Fragment {
 
 
     /**
-     * Construct the view depend on fight state
+     * Construct the view which depend on fight state
      */
     private void constructView(final Fight fight) {
 
@@ -113,6 +121,19 @@ public class FightTrainerFragment extends Fragment {
 
         // If current user is in fight
         if (fight != null) {
+            TextView currentFightState = new TextView(getActivity());
+
+            // Display information about the current fight
+            if (currentTrainer.equals(fight.getTrainer1().getLogin())) {
+                currentFightState.setText("Combat avec " + fight.getTrainer2().getName());
+                l.addView(currentFightState);
+            } else {
+                currentFightState.setText("Combat avec " + fight.getTrainer1().getName());
+                l.addView(currentFightState);
+            }
+
+
+            // If a fight request has been sent
             if (fight.getFight_state().getName().equals(FightConstant.FIGHT_REQUEST_SENT)) {
                 TextView tvAlreadyinFight = new TextView(getActivity());
 
@@ -132,7 +153,7 @@ public class FightTrainerFragment extends Fragment {
                             final Integer fightId = fight.getId();
                             fightWSimpl.updateFightState(fightId, FightConstant.FIGHT_REQUEST_ACCEPTED);
 
-                            MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_ACCEPTED);
+                            MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), FightConstant.FIGHT_REQUEST_ACCEPTED);
                             mobileEngagementWSimpl.sendNotification(opponentName);
                         }
                     });
@@ -143,26 +164,78 @@ public class FightTrainerFragment extends Fragment {
 
             // If fight request is accepted, let the user choose 4 pokemons
             } else if (fight.getFight_state().getName().equals(FightConstant.FIGHT_REQUEST_ACCEPTED)) {
-                TextView tvFightAccepted = new TextView(getActivity());
-                tvFightAccepted.setText("La requête de combat a été accepté, choisissez 4 pokemons pour combattre");
 
-                Button startPokemonChoice = new Button(getActivity());
-                startPokemonChoice.setText("Choisir pokemons");
-                startPokemonChoice.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Go to PokemonActivity to choose pokemons
-                        Intent pokemonActivity = new Intent(getActivity(), PokemonActivity.class);
-                        pokemonActivity.putExtra("pokemonChoice","pokemonChoice");
-                        startActivity(pokemonActivity);
+                // Check pokemon list state for each users
+                String checkPokemonsList = checkTrainersPokemonList(fight);
+
+                // If current user is ready
+                if (checkPokemonsList.equals(FightConstant.TRAINER1_POKEMONS_READY) && currentTrainer.equals(fight.getTrainer1().getLogin())
+                        || checkPokemonsList.equals(FightConstant.TRAINER2_POKEMONS_READY) && currentTrainer.equals(fight.getTrainer2().getLogin())) {
+                    TextView tvOpponentPokemonsNotReady = new TextView(getActivity());
+                    tvOpponentPokemonsNotReady.setText("Les pokémons du joueur adverses ne sont pas prêts");
+                    l.addView(tvOpponentPokemonsNotReady);
+
+
+                // If both users are ready
+                } else if (checkPokemonsList.equals(FightConstant.ALL_POKEMONS_READY)) {
+                    TextView tvPokemonChoose = new TextView(getActivity());
+                    tvPokemonChoose.setText("Choix du pokemon");
+                    l.addView(tvPokemonChoose);
+
+                    if (isTrainer1(fight, currentTrainer)) {
+                        for (Pokemon pokemon : trainer1PokemonsInFight) {
+                            Button button = new Button(getActivity());
+                            button.setText(pokemon.getName());
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Button text = (Button) v;
+                                    String pokemon = text.getText().toString();
+                                    setPokemonInFight(fight, trainer1PokemonsInFight, pokemon);
+                                }
+                            });
+                            l.addView(button);
+                        }
+                    } else {
+                        for (Pokemon pokemon : trainer2PokemonsInFight) {
+                            Button button = new Button(getActivity());
+                            button.setText(pokemon.getName());
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                            l.addView(button);
+                        }
                     }
-                });
 
-                l.addView(tvFightAccepted);
-                l.addView(startPokemonChoice);
+                    //LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    //RelativeLayout pokemonFightLayout = (RelativeLayout) inflater.inflate(R.layout.pokemon_fight_layout, l, false);
+                    //l.addView(pokemonFightLayout);
+
+                } else {
+                    TextView tvFightAccepted = new TextView(getActivity());
+                    tvFightAccepted.setText("La requête de combat a été accepté, choisissez 4 pokemons pour combattre");
+
+                    Button startPokemonChoice = new Button(getActivity());
+                    startPokemonChoice.setText("Choisir pokemons");
+                    startPokemonChoice.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Go to PokemonActivity to choose pokemons
+                            Intent pokemonActivity = new Intent(getActivity(), PokemonActivity.class);
+                            pokemonActivity.putExtra("fight", fight);
+                            startActivity(pokemonActivity);
+                        }
+                    });
+
+                    l.addView(tvFightAccepted);
+                    l.addView(startPokemonChoice);
+                }
             }
 
-
+            // If current user is not in fight
         } else {
             TextView tvNoCurrentFight = new TextView(getActivity());
             tvNoCurrentFight.setText("Pas de combat en cours");
@@ -177,13 +250,108 @@ public class FightTrainerFragment extends Fragment {
                         FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
                         fightWSimpl.setNewFight(FightConstant.FIGHT_REQUEST_SENT, opponentName);
 
-                        MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), opponentName, FightConstant.FIGHT_REQUEST_SENT);
+                        MobileEngagementWSimpl mobileEngagementWSimpl = new MobileEngagementWSimpl(getActivity(), FightConstant.FIGHT_REQUEST_SENT);
                         mobileEngagementWSimpl.sendNotification(opponentName);
                     }
                 });
 
                 l.addView(engageFight);
             }
+        }
+    }
+
+
+    /**
+     * Check the pokemons list for each trainer
+     *
+     * @param fight
+     * @return
+     */
+    private String checkTrainersPokemonList(Fight fight) {
+        String state = "";
+
+        trainer1PokemonsInFight = new ArrayList<Pokemon>();
+        trainer2PokemonsInFight = new ArrayList<Pokemon>();
+
+        // Get lists
+        List<Pokemon> trainer1Pokemons = fight.getTrainer1().getPokemon();
+        List<Pokemon> trainer2Pokemons = fight.getTrainer2().getPokemon();
+
+        Boolean trainer1ListSet = false;
+        Boolean trainer2ListSet = false;
+
+        // Check if pokemons list have pokemons ready to fight
+        for (Pokemon pokemon : trainer1Pokemons) {
+            if (pokemon.getPokemon_fight_state() != null) {
+                trainer1PokemonsInFight.add(pokemon);
+                trainer1ListSet = true;
+            }
+        }
+
+        for (Pokemon pokemon : trainer2Pokemons) {
+            if (pokemon.getPokemon_fight_state() != null) {
+                trainer2PokemonsInFight.add(pokemon);
+                trainer2ListSet = true;
+            }
+        }
+
+        // Check result
+        if (trainer1ListSet && trainer2ListSet) {
+            state = FightConstant.ALL_POKEMONS_READY;
+        } else if (trainer1ListSet) {
+            state = FightConstant.TRAINER1_POKEMONS_READY;
+        } else if (trainer2ListSet) {
+            state = FightConstant.TRAINER2_POKEMONS_READY;
+        }
+
+        return state;
+    }
+
+
+    /**
+     * Check who is trainer1
+     */
+    private boolean isTrainer1(Fight fight, String name) {
+        if (name.equals(fight.getTrainer1().getLogin())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Set pokemon choosen state "in fight"
+     */
+    private void setPokemonInFight(Fight fight, List<Pokemon> pokemons, String name) {
+
+        Pokemon toPutInFight = null;
+
+        // Map pokemon cliked with pokemon in list
+        for (Pokemon pokemon : pokemons) {
+            if (pokemon.getName().equals(name)) {
+                toPutInFight = pokemon;
+            }
+        }
+
+        // Check Pokemon health
+        if (isOkForFight(toPutInFight)) {
+            PokemonWSimpl pokemonWSimpl = new PokemonWSimpl(getActivity());
+            pokemonWSimpl.putPokemonInFight(toPutInFight.getId());
+
+            FightWSimpl fightWSimpl = new FightWSimpl(getActivity());
+            //fightWSimpl.updateFightState(fight, FightConstant.);
+        }
+    }
+
+    /**
+     * Check if pokemon have enough health for fight
+     */
+    Boolean isOkForFight(Pokemon pokemon) {
+        if (pokemon.getHp() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

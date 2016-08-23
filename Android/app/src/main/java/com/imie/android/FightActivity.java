@@ -58,20 +58,6 @@ public class FightActivity extends AppCompatActivity implements OnMapReadyCallba
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
-        /* Initialize fightTrainer fragment
-        if (findViewById(R.id.Dresseurs) != null) {
-
-           // Check if fragement is already instanciated
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            FightTrainerFragment fightTrainerFragment = new FightTrainerFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.Dresseurs, fightTrainerFragment).commit();
-        }
-        */
-
         // Initialize google maps fragment
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);

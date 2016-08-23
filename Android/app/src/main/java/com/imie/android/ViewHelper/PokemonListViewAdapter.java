@@ -40,6 +40,7 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
             viewHolder.level = (TextView) convertView.findViewById(R.id.tvPokemonListLevel);
             viewHolder.experience = (TextView) convertView.findViewById(R.id.tvPokemonListExperience);
             viewHolder.hp = (TextView) convertView.findViewById(R.id.tvPokemonListHp);
+            //viewHolder.id = (TextView) convertView.findViewById(R.id.tvPokemonListId);
 
             convertView.setTag(viewHolder);
         }
@@ -54,16 +55,18 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         viewHolder.level.setText("Niveau: " + pokemon.getLevel().toString());
         viewHolder.experience.setText("Experience: " + pokemon.getExperience().toString());
         viewHolder.hp.setText("PV: " + pokemon.getHp().toString());
+        //viewHolder.id.setText(pokemon.getId().toString());
 
         return convertView;
     }
 
-    private class PokemonViewHolder{
+    private class PokemonViewHolder {
         public ImageView avatar;
         public TextView name;
         public TextView type;
         public TextView level;
         public TextView experience;
         public TextView hp;
+        //public TextView id;
     }
 }

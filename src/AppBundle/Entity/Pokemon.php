@@ -443,29 +443,6 @@ class Pokemon
         return $this->position;
     }
 
-    /**
-     * Set isFighting
-     *
-     * @param boolean $isFighting
-     *
-     * @return Pokemon
-     */
-    public function setIsFighting($isFighting)
-    {
-        $this->isFighting = $isFighting;
-
-        return $this;
-    }
-
-    /**
-     * Get isFighting
-     *
-     * @return boolean
-     */
-    public function getIsFighting()
-    {
-        return $this->isFighting;
-    }
 
     /**
      * Set pokemonFightState

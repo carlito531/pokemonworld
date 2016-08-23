@@ -72,10 +72,10 @@ class ConnectionController extends FOSRestController
                         session_start();
                         $_SESSION['login'] = $trainer->getLogin();
 
-                        $view = $this->view("User connected", 200)->setFormat('json');
+                        $view = $this->view("Utilisateur connecté", 200)->setFormat('json');
                     }
                 } else {
-                    $view = $this->view(false, 500)->setFormat('json');
+                    $view = $this->view("Mauvais identifiants", 204)->setFormat('json');
                 }
             }
         }
@@ -124,7 +124,7 @@ class ConnectionController extends FOSRestController
                 session_start();
                 $_SESSION['login'] = $trainer->getLogin();
 
-                $view = $this->view("User registred", 201)->setFormat('json');
+                $view = $this->view("Utilisateur enregistré", 201)->setFormat('json');
             } else {
                 $view = $this->view("Identifiants manquants", 500)->setFormat('json');
             }

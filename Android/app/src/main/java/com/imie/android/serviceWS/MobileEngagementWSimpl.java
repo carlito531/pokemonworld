@@ -30,7 +30,7 @@ public class MobileEngagementWSimpl {
     private Context context;
     private String fightState;
 
-    public MobileEngagementWSimpl(Context context, String opponentName, String fightState) {
+    public MobileEngagementWSimpl(Context context, String fightState) {
         this.context = context;
         this.fightState = fightState;
 

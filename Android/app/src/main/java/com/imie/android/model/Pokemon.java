@@ -1,10 +1,12 @@
 package com.imie.android.model;
 
+import java.io.Serializable;
+
 /**
  * Represent a Pokemon
  * Created by charly on 31/07/2016.
  */
-public class Pokemon {
+public class Pokemon implements Serializable {
 
     Integer id;
     String name;
@@ -13,7 +15,7 @@ public class Pokemon {
     Attack attack3;
     Attack attack4;
     PokemonType pokemon_type;
-    PokemonFightState pokemonFightState;
+    PokemonFightState pokemon_fight_state;
     Integer level;
     Integer experience;
     Integer hp;
@@ -98,11 +100,11 @@ public class Pokemon {
         this.experience = experience;
     }
 
-    public PokemonFightState getPokemonFightState() {
-        return pokemonFightState;
+    public PokemonFightState getPokemon_fight_state() {
+        return pokemon_fight_state;
     }
 
-    public void setPokemonFightState(PokemonFightState pokemonFightState) {
-        this.pokemonFightState = pokemonFightState;
+    public void setPokemon_fight_state(PokemonFightState pokemon_fight_state) {
+        this.pokemon_fight_state = pokemon_fight_state;
     }
 }
