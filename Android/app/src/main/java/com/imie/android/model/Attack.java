@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Attack implements Serializable {
 
     private String name;
+    private Integer damage;
 
     public String getName() {
         return name;
@@ -15,5 +16,13 @@ public class Attack implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getDamage() {
+        return damage;
+    }
+
+    public void setDamage(Integer damage) {
+        this.damage = damage;
     }
 }

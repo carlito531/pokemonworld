@@ -79,7 +79,6 @@ public class FightWSimpl {
         fightItem.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
             }
 
             @Override

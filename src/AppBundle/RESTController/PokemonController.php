@@ -139,4 +139,45 @@ class PokemonController extends FOSRestController
 
         return $view;
     }
+
+    /**
+     * @Route("{id}/attack")
+     * @Method("PUT")
+     *
+     * @param $id
+     * @param Request $request
+     * @return View
+     */
+    public function attackOpponent($id, Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $damage = null;
+        $view = null;
+
+        try {
+            if ($request != null) {
+
+                if($request->request->get("damage") != null) {
+                    $damage = $request->request->get("damage");
+                }
+
+                $pokemon = $em->getRepository('AppBundle:Pokemon')->find($id);
+                $pokemon->setHp(($pokemon->getHp()) - $damage);
+                if ($pokemon->getHp() < 0) {
+                    $pokemon->setHp(0);
+                }
+
+                $em->persist($pokemon);
+                $em->flush();
+
+                $view = $this->view("Pokemon adverse attaqué ", 200)->setFormat('json');
+            }
+
+        } catch (Exception $e) {
+            $view = $this->view($e->getMessage(), 500)->setFormat('json');
+            var_dump($e->getMessage());
+        }
+
+        return $view;
+    }
 }

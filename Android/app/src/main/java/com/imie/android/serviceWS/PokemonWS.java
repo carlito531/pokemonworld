@@ -29,7 +29,10 @@ public interface PokemonWS {
     @PUT("/api/pokemon/putInFightList")
     Call<String> putInFightList(@Field("pokemonIds") JSONArray ids);
 
-    @FormUrlEncoded
     @PUT("/api/pokemon/{id}/putInFight")
-    Call<String> putInFight(@Path("pokemonId") Integer id);
+    Call<String> putInFight(@Path("id") Integer id);
+
+    @FormUrlEncoded
+    @PUT("/api/pokemon/{id}/attack")
+    Call<String> attackOpponent(@Path("id") Integer id, @Field("damage") Integer damage);
 }

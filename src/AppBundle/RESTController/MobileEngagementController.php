@@ -25,6 +25,7 @@ class MobileEngagementController extends FOSRestController
     const FIGHT_REQUEST_ACCEPTED = "FIGHT_REQUEST_ACCEPTED";
     const TRAINER1_POKEMONS_READY = "TRAINER1_POKEMONS_READY";
     const TRAINER2_POKEMONS_READY = "TRAINER2_POKEMONS_READY";
+    const POKEMON_IN_FIGHT = "POKEMON_IN_FIGHT";
 
     /**
      * @Route("/sendNotification")
@@ -65,7 +66,12 @@ class MobileEngagementController extends FOSRestController
         } else if ($fightState == TRAINER1_POKEMONS_READY || $fightState == TRAINER2_POKEMONS_READY) {
             $notificationTitle = "Pokemons prêts";
             $notificationContent = " a préparer ses pokemons au combat";
+
+        } else if ($fightState == POKEMON_IN_FIGHT) {
+            $notificationTitle = "Pokemon prêt";
+            $notificationContent = " a sorti un pokémon";
         }
+
 
         // Get access token to call Azure Mobile Engagement REST api
         $accessTokenString = $this->getAccesToken();

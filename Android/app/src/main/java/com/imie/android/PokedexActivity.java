@@ -1,10 +1,12 @@
 package com.imie.android;
 
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class PokedexActivity extends AppCompatActivity {
     private TextView attack3;
     private TextView attack4;
     private Button rechercher;
+    private ImageView avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class PokedexActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pokedex);
 
         nameSearch = (EditText)findViewById(R.id.pokedexEt);
+        avatar = (ImageView)findViewById(R.id.ivPokedexAvatar);
         name = (TextView)findViewById(R.id.pokedexPokemonNameTv);
         type = (TextView)findViewById(R.id.pokedexPokemonTypeTv);
         attack1 = (TextView)findViewById(R.id.pokedexPokemonAttaque1);
@@ -79,6 +83,8 @@ public class PokedexActivity extends AppCompatActivity {
                 Pokemon pokemonResult = response.body();
 
                 if (pokemonResult != null) {
+                    avatar.setImageResource(getResources().getIdentifier(pokemonResult.getName().toLowerCase(), "drawable", getPackageName()));
+                    avatar.setVisibility(View.VISIBLE);
                     name.setText("Nom: " + pokemonResult.getName());
                     name.setVisibility(View.VISIBLE);
                     type.setText("Type: " + pokemonResult.getPokemonType().getName());

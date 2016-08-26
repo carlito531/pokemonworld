@@ -3,6 +3,7 @@ package com.imie.android.ViewHelper;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,11 @@ import java.util.List;
  */
 public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
 
+    Context context;
+
     public PokemonListViewAdapter(Context context, List<Pokemon> pokemons) {
         super(context, 0, pokemons);
+        this.context = context;
     }
 
     @Override
@@ -40,7 +44,6 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
             viewHolder.level = (TextView) convertView.findViewById(R.id.tvPokemonListLevel);
             viewHolder.experience = (TextView) convertView.findViewById(R.id.tvPokemonListExperience);
             viewHolder.hp = (TextView) convertView.findViewById(R.id.tvPokemonListHp);
-            //viewHolder.id = (TextView) convertView.findViewById(R.id.tvPokemonListId);
 
             convertView.setTag(viewHolder);
         }
@@ -49,13 +52,12 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         Pokemon pokemon = getItem(position);
 
         // fill the view
-        viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
+        viewHolder.avatar.setImageResource(context.getResources().getIdentifier(pokemon.getName().toLowerCase(), "drawable", context.getPackageName()));
         viewHolder.name.setText("Nom: " + pokemon.getName());
         viewHolder.type.setText("Type: " + pokemon.getPokemonType().getName());
         viewHolder.level.setText("Niveau: " + pokemon.getLevel().toString());
         viewHolder.experience.setText("Experience: " + pokemon.getExperience().toString());
         viewHolder.hp.setText("PV: " + pokemon.getHp().toString());
-        //viewHolder.id.setText(pokemon.getId().toString());
 
         return convertView;
     }
@@ -67,6 +69,5 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         public TextView level;
         public TextView experience;
         public TextView hp;
-        //public TextView id;
     }
 }

@@ -50,7 +50,7 @@ public class PokemonWSimpl {
         item.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                Toast.makeText(context, response.body(), Toast.LENGTH_LONG);
+                Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -73,7 +73,7 @@ public class PokemonWSimpl {
         item.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                Toast.makeText(context, response.body(), Toast.LENGTH_LONG);
+                Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -81,6 +81,29 @@ public class PokemonWSimpl {
                 t.printStackTrace();
             }
         });
+    }
 
+
+    /**
+     * Attack opponent pokemon
+     *
+     * @param opponentId
+     * @param damage
+     */
+    public void attackOpponent(Integer opponentId, Integer damage) {
+        PokemonWS pokemonWS = retrofit.create(PokemonWS.class);
+        Call<String> item = pokemonWS.attackOpponent(opponentId, damage);
+
+        item.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response, Retrofit retrofit) {
+                Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
