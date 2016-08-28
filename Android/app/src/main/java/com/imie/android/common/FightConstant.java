@@ -8,7 +8,21 @@ public class FightConstant {
 
     public final static String FIGHT_REQUEST_SENT = "FIGHT_REQUEST_SENT";
     public final static String FIGHT_REQUEST_ACCEPTED = "FIGHT_REQUEST_ACCEPTED";
-    public final static String WAITING_FOR_POKEMON = "WAITING_FOR_POKEMON";
-    public final static String POKEMON_READY = "POKEMON_READY";
+    public final static String TRAINER1_POKEMONS_READY = "TRAINER1_POKEMONS_READY";
+    public final static String TRAINER2_POKEMONS_READY = "TRAINER2_POKEMONS_READY";
+    public final static String ALL_POKEMONS_READY = "ALL_POKEMONS_READY";
+    public final static String POKEMON_IN_FIGHT = "POKEMON_IN_FIGHT";
+    public final static String FIGHT_CAN_START = "FIGHT_CAN_START";
+    public final static String TRAINER1_ATTACK_TURN = "TRAINER1_ATTACK_TURN";
+    public final static String TRAINER2_ATTACK_TURN = "TRAINER2_ATTACK_TURN";
+    public final static String WAITING_FOR_TRAINER1_POKEMON = "WAITING_FOR_TRAINER1_POKEMON";
+    public final static String WAITING_FOR_TRAINER2_POKEMON = "WAITING_FOR_TRAINER2_POKEMON";
+    public final static String TRAINER1_POKEMONS_KO = "TRAINER1_POKEMONS_KO";
+    public final static String TRAINER2_POKEMONS_KO = "TRAINER2_POKEMONS_KO";
+
+
+    public final static String IN_FIGHT_LIST = "IN_FIGHT_LIST";
+    public final static String IN_FIGHT = "IN_FIGHT";
+    public final static String KO = "KO";
 
 }

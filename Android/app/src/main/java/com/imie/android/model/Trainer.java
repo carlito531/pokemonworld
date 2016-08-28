@@ -1,11 +1,12 @@
 package com.imie.android.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by charly on 06/08/2016.
  */
-public class Trainer {
+public class Trainer implements Serializable {
 
     private String name;
     private String login;

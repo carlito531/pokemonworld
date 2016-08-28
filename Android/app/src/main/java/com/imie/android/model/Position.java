@@ -1,9 +1,11 @@
 package com.imie.android.model;
 
+import java.io.Serializable;
+
 /**
  * Created by charly on 06/08/2016.
  */
-public class Position {
+public class Position implements Serializable {
 
     private float latitude;
     private float longitude;

@@ -85,7 +85,7 @@ public class TrainerActivity extends AppCompatActivity {
             }
         });
 
-        avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
+        avatar.setImageResource(R.drawable.sacha);
 
         // Initialize Retrofit
         retrofit = new Retrofit.Builder()

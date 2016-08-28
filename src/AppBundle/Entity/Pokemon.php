@@ -25,6 +25,7 @@ class Pokemon
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -52,6 +53,7 @@ class Pokemon
      */
     private $hp;
 
+
     /**
      * @ORM\OneToOne(targetEntity="Pokemon")
      * @ORM\JoinColumn(name="pokemonEvolution_id", referencedColumnName="id")
@@ -69,6 +71,13 @@ class Pokemon
      * @ORM\JoinColumn(name="trainer_id", referencedColumnName="id")
      */
     private $trainer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PokemonFightState")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     * @Expose
+     */
+    private $pokemonFightState;
 
     /**
      * @ORM\ManyToOne(targetEntity="PokemonType", inversedBy="pokemons")
@@ -432,5 +441,30 @@ class Pokemon
     public function getPosition()
     {
         return $this->position;
+    }
+
+
+    /**
+     * Set pokemonFightState
+     *
+     * @param \AppBundle\Entity\PokemonFightState $pokemonFightState
+     *
+     * @return Pokemon
+     */
+    public function setPokemonFightState(\AppBundle\Entity\PokemonFightState $pokemonFightState)
+    {
+        $this->pokemonFightState = $pokemonFightState;
+
+        return $this;
+    }
+
+    /**
+     * Get pokemonFightState
+     *
+     * @return \AppBundle\Entity\PokemonFightState
+     */
+    public function getPokemonFightState()
+    {
+        return $this->pokemonFightState;
     }
 }

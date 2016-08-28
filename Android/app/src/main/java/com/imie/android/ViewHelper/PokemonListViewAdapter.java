@@ -3,6 +3,7 @@ package com.imie.android.ViewHelper;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,11 @@ import java.util.List;
  */
 public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
 
+    Context context;
+
     public PokemonListViewAdapter(Context context, List<Pokemon> pokemons) {
         super(context, 0, pokemons);
+        this.context = context;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         Pokemon pokemon = getItem(position);
 
         // fill the view
-        viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.BLACK));
+        viewHolder.avatar.setImageResource(context.getResources().getIdentifier(pokemon.getName().toLowerCase(), "drawable", context.getPackageName()));
         viewHolder.name.setText("Nom: " + pokemon.getName());
         viewHolder.type.setText("Type: " + pokemon.getPokemonType().getName());
         viewHolder.level.setText("Niveau: " + pokemon.getLevel().toString());
@@ -58,7 +62,7 @@ public class PokemonListViewAdapter extends ArrayAdapter<Pokemon> {
         return convertView;
     }
 
-    private class PokemonViewHolder{
+    private class PokemonViewHolder {
         public ImageView avatar;
         public TextView name;
         public TextView type;

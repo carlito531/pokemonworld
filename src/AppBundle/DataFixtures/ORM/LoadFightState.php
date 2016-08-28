@@ -29,8 +29,32 @@ class LoadFightState extends AbstractFixture implements OrderedFixtureInterface
         $fightRequestAccepted = new FightState();
         $fightRequestAccepted->setName("FIGHT_REQUEST_ACCEPTED");
 
+        $trainer1PokemonsReady = new FightState();
+        $trainer1PokemonsReady->setName("TRAINER1_POKEMONS_READY");
+
+        $trainer2PokemonsReady = new FightState();
+        $trainer2PokemonsReady->setName("TRAINER2_POKEMONS_READY");
+
+        $allPokemonsReady = new FightState();
+        $allPokemonsReady->setName("ALL_POKEMONS_READY");
+
+        $fightCanStart = new FightState();
+        $fightCanStart->setName("FIGHT_CAN_START");
+
+        $trainer1AttackTurn = new FightState();
+        $trainer1AttackTurn->setName("TRAINER1_ATTACK_TURN");
+
+        $trainer2AttackTurn = new FightState();
+        $trainer2AttackTurn->setName("TRAINER2_ATTACK_TURN");
+
         $manager->persist($fightRequestState);
         $manager->persist($fightRequestAccepted);
+        $manager->persist($trainer1PokemonsReady);
+        $manager->persist($trainer2PokemonsReady);
+        $manager->persist($allPokemonsReady);
+        $manager->persist($fightCanStart);
+        $manager->persist($trainer1AttackTurn);
+        $manager->persist($trainer2AttackTurn);
 
         $manager->flush();
     }

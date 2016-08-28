@@ -23,36 +23,88 @@ class LoadPokemonData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $pokemon = new Pokemon();
-        $pokemon->setName('Raichu');
-        $pokemon->setExperience(50);
-        $pokemon->setHp(100);
-        $pokemon->setLevel(1);
-        $pokemon->setPokemonType($this->getReference('pokemontype-electrique'));
-        $pokemon->setPosition($this->getReference('position-ville'));
-        $pokemon->setAttack1($this->getReference('attaque-eclair'));
-        $pokemon->setAttack2($this->getReference('attaque-tonnerre'));
-        $pokemon->setAttack3($this->getReference('attaque-viveattaque'));
-        $pokemon->setAttack4($this->getReference('attaque-mimiqueue'));
+        $sacha531 = $this->getReference('trainer-sacha531');
+        $luc54 = $this->getReference('trainer-luc54');
+        $bob33 = $this->getReference('trainer-bob33');
+        $paul22 = $this->getReference('trainer-paul22');
 
-        $pokemon1 = new Pokemon();
-        $pokemon1->setName('Pikachu');
-        $pokemon1->setExperience(80);
-        $pokemon1->setHp(100);
-        $pokemon1->setLevel(1);
-        $pokemon1->setPokemonType($this->getReference('pokemontype-electrique'));
-        $pokemon1->setPosition($this->getReference('position-ville'));
-        $pokemon1->setAttack1($this->getReference('attaque-eclair'));
-        $pokemon1->setAttack2($this->getReference('attaque-tonnerre'));
-        $pokemon1->setAttack3($this->getReference('attaque-viveattaque'));
-        $pokemon1->setAttack4($this->getReference('attaque-mimiqueue'));
+        $trainers = array($sacha531, $luc54, $bob33, $paul22);
 
-        $manager->persist($pokemon);
-        $manager->persist($pokemon1);
-        $manager->flush();
+        for ($i = 0; $i < count($trainers); $i++) {
 
-        $this->addReference('pokemon-raichu', $pokemon);
-        $this->addReference('pokemon-pikachu', $pokemon1);
+            $raichu = new Pokemon();
+            $raichu->setName('Raichu');
+            $raichu->setExperience(0);
+            $raichu->setHp(100);
+            $raichu->setLevel(1);
+            $raichu->setPokemonType($this->getReference('pokemontype-electrique'));
+            $raichu->setPosition($this->getReference('position-ville'));
+            $raichu->setAttack1($this->getReference('attaque-eclair'));
+            $raichu->setAttack2($this->getReference('attaque-tonnerre'));
+            $raichu->setAttack3($this->getReference('attaque-viveattaque'));
+            $raichu->setAttack4($this->getReference('attaque-mimiqueue'));
+            $raichu->setTrainer($trainers[$i]);
+
+            $pikachu = new Pokemon();
+            $pikachu->setName('Pikachu');
+            $pikachu->setExperience(0);
+            $pikachu->setHp(100);
+            $pikachu->setLevel(1);
+            $pikachu->setPokemonType($this->getReference('pokemontype-electrique'));
+            $pikachu->setPosition($this->getReference('position-ville'));
+            $pikachu->setAttack1($this->getReference('attaque-eclair'));
+            $pikachu->setAttack2($this->getReference('attaque-tonnerre'));
+            $pikachu->setAttack3($this->getReference('attaque-viveattaque'));
+            $pikachu->setAttack4($this->getReference('attaque-mimiqueue'));
+            $pikachu->setTrainer($trainers[$i]);
+
+            $evoli = new Pokemon();
+            $evoli->setName('Evoli');
+            $evoli->setExperience(0);
+            $evoli->setHp(100);
+            $evoli->setLevel(1);
+            $evoli->setPokemonType($this->getReference('pokemontype-normal'));
+            $evoli->setPosition($this->getReference('position-ville'));
+            $evoli->setAttack1($this->getReference('attaque-morsure'));
+            $evoli->setAttack2($this->getReference('attaque-belier'));
+            $evoli->setAttack3($this->getReference('attaque-viveattaque'));
+            $evoli->setAttack4($this->getReference('attaque-mimiqueue'));
+            $evoli->setTrainer($trainers[$i]);
+
+            $racaillou = new Pokemon();
+            $racaillou->setName('Racaillou');
+            $racaillou->setExperience(0);
+            $racaillou->setHp(100);
+            $racaillou->setLevel(1);
+            $racaillou->setPokemonType($this->getReference('pokemontype-roche'));
+            $racaillou->setPosition($this->getReference('position-ville'));
+            $racaillou->setAttack1($this->getReference('attaque-roulade'));
+            $racaillou->setAttack2($this->getReference('attaque-viveattaque'));
+            $racaillou->setAttack3($this->getReference('attaque-bouleroc'));
+            $racaillou->setAttack4($this->getReference('attaque-destruction'));
+            $racaillou->setTrainer($trainers[$i]);
+
+            $abra = new Pokemon();
+            $abra->setName('Abra');
+            $abra->setExperience(0);
+            $abra->setHp(100);
+            $abra->setLevel(1);
+            $abra->setPokemonType($this->getReference('pokemontype-psi'));
+            $abra->setPosition($this->getReference('position-ville'));
+            $abra->setAttack1($this->getReference('attaque-psyko'));
+            $abra->setAttack2($this->getReference('attaque-devoreve'));
+            $abra->setAttack3($this->getReference('attaque-distorsion'));
+            $abra->setAttack4($this->getReference('attaque-interversion'));
+            $abra->setTrainer($trainers[$i]);
+
+            $manager->persist($raichu);
+            $manager->persist($pikachu);
+            $manager->persist($evoli);
+            $manager->persist($racaillou);
+            $manager->persist($abra);
+
+            $manager->flush();
+        }
     }
 
     /**
@@ -62,6 +114,6 @@ class LoadPokemonData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

@@ -13,11 +13,11 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FightStateRepository")
- * @ORM\Table(name="fightState")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PokemonFightStateRepository")
+ * @ORM\Table(name="pokemonFightState")
  * @ExclusionPolicy("All")
  */
-class FightState
+class PokemonFightState
 {
     /**
      * @ORM\Column(type="integer")
@@ -31,7 +31,6 @@ class FightState
      * @Expose
      */
     private $name;
-
 
     /**
      * Get id
@@ -48,7 +47,7 @@ class FightState
      *
      * @param string $name
      *
-     * @return FightState
+     * @return PokemonFightState
      */
     public function setName($name)
     {

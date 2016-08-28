@@ -24,13 +24,29 @@ class LoadPokemonTypeData extends AbstractFixture implements OrderedFixtureInter
      */
     public function load(ObjectManager $manager)
     {
-        $pokemonType = new PokemonType();
-        $pokemonType->setName('Electrique');
+        $electrique = new PokemonType();
+        $electrique->setName('Electrique');
 
-        $manager->persist($pokemonType);
+        $normal = new PokemonType();
+        $normal->setName('Normal');
+
+        $psi = new PokemonType();
+        $psi->setName('Psi');
+
+        $roche = new PokemonType();
+        $roche->setName('Roche');
+
+        $manager->persist($electrique);
+        $manager->persist($normal);
+        $manager->persist($psi);
+        $manager->persist($roche);
+
         $manager->flush();
 
-        $this->addReference('pokemontype-electrique', $pokemonType);
+        $this->addReference('pokemontype-electrique', $electrique);
+        $this->addReference('pokemontype-normal', $normal);
+        $this->addReference('pokemontype-psi', $psi);
+        $this->addReference('pokemontype-roche', $roche);
     }
 
     /**

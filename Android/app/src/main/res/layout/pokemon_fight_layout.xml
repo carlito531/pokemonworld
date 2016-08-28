@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="30dp"
+    android:id="@+id/pokemon_fight_layout">
+
+
+    <ImageView
+        android:id="@+id/ivPokemonFightOpponentAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/tvPokemonFightOpponentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/ivPokemonFightOpponentAvatar"
+        android:layout_alignTop="@+id/ivPokemonFightOpponentAvatar"
+        android:textStyle="bold"
+        tools:text="Nom pokemon"/>
+
+    <TextView
+        android:id="@+id/tvPokemonFightOpponentHp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/ivPokemonFightOpponentAvatar"
+        android:layout_below="@+id/tvPokemonFightOpponentName"
+        android:textStyle="bold"
+        tools:text="Vie"/>
+
+    <TextView
+        android:id="@+id/tvPokemonFightTextInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ivPokemonFightOpponentAvatar"
+        android:textStyle="bold"
+        tools:text="Texte information combat"/>
+
+
+    <ImageView
+        android:id="@+id/ivPokemonFightAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/ivPokemonFightOpponentAvatar"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/ivPokemonFightName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/ivPokemonFightAvatar"
+        android:layout_alignTop="@+id/ivPokemonFightAvatar"
+        android:textStyle="bold"
+        tools:text="Nom pokemon"/>
+
+    <TextView
+        android:id="@+id/ivPokemonFightHp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/ivPokemonFightName"
+        android:layout_below="@+id/ivPokemonFightName"
+        tools:text="Vie" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivPokemonFightHp"
+        android:layout_below="@+id/ivPokemonFightHp"
+        android:text="Attaque 1"
+        android:id="@+id/btPokemonFightAttack1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_alignTop="@+id/btPokemonFightAttack1"
+        android:layout_toRightOf="@+id/btPokemonFightAttack1"
+        android:text="Attaque 2"
+        android:id="@+id/btPokemonFightAttack2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btPokemonFightAttack1"
+        android:layout_below="@+id/btPokemonFightAttack1"
+        android:text="Attaque 3"
+        android:id="@+id/btPokemonFightAttack3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btPokemonFightAttack2"
+        android:layout_below="@+id/btPokemonFightAttack2"
+        android:text="Attaque 3"
+        android:id="@+id/btPokemonFightAttack4" />
+
+</RelativeLayout>
