@@ -165,6 +165,7 @@ class PokemonController extends FOSRestController
                 $pokemon->setHp(($pokemon->getHp()) - $damage);
                 if ($pokemon->getHp() < 0) {
                     $pokemon->setHp(0);
+                    $pokemon->setPokemonFightState($em->getRepository('AppBundle:PokemonFightState')->findOneBy(array('name' => 'IN_FIGHT_LIST')));
                 }
 
                 $em->persist($pokemon);
